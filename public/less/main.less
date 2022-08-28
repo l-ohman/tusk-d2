@@ -1,0 +1,30 @@
+// hero imgs: 256 x 144
+@herowidth: 120px;
+@heroheight: floor(@herowidth * 0.5625);
+@herocount: 4;
+@verticalspacing: 10px;
+@spacing: space-around;
+
+* {
+  box-sizing: border-box;
+  font-family: arial, sans-serif;
+  background-color: black;
+  color: whitesmoke;
+}
+
+#draft-container {
+  width: (@herowidth * 2) + (@herowidth / 2);
+  height: (@heroheight * @herocount / 2) + ((@herocount + 1) * @verticalspacing);
+  margin: auto;
+
+  display: flex;
+  flex-flow: row wrap;
+  justify-content: @spacing;
+  align-items: @spacing;
+
+
+  img {
+    width: @herowidth;
+    height: @heroheight;
+  }
+}

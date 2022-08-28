@@ -1,8 +1,10 @@
-// Rebuilds hero table (this is mostly proof of concept, but might be used to more easily get hero info later, such as stats, spells, etc)
-// Calls Stratz API
+// Should split this into 2 categories:
+    // (1) Builds base hero table
+    // (2) Gets winrates of each hero and other necessary data
+
 const Sequelize = require('sequelize');
 const db = require('./db');
-const Hero = require('./models/Hero');
+const Hero = require('../models/Hero');
 
 const fetchStratz = require('../api/fetchStratz');
 
@@ -27,13 +29,12 @@ const getAllHeroes = async () => {
 
 // Adds API response to SQL db
 const buildHeroTable = async () => {
-    // console.log('Rebuilding hero table...')
     await Hero.sync({ force: true });
 
     const allHeroes = await new Promise((resolve, reject) => {
         const timer = setTimeout(() => {
             reject(new Error('Could not reach STRATZ server (timeout)'))
-        }, 5000); // max wait is 5s
+        }, 5000); // Cancel if Stratz cannot be reached in 5s
 
         getAllHeroes().then(output => {
             clearTimeout(timer);
@@ -43,10 +44,8 @@ const buildHeroTable = async () => {
     for (let i = 0; i < allHeroes.length; i++) {
         Hero.create(allHeroes[i]);
     }
-    // console.log('\nHero table succesfully created');
 }
 
-// See 'npm run rebuildHeroes'
 if (require.main === module) { 
     buildHeroTable();
 };

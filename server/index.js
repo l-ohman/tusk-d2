@@ -7,8 +7,6 @@ const app = express();
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
-// static
-// app.use(express.static("../public"));
 app.use(express.static(path.join(__dirname, '../public')))
 
 app.get("/", (req, res, next) => {
@@ -24,13 +22,10 @@ app.use("/api", require("./api"));
 
 // Error handling
 app.use((err, req, res, next) => {
-  console.error(err.stack);
   res.status(err.status || 500).send(err.message || "Internal server error");
 });
 
-// Specified because Heroku needs to listen on a specific port
-let port = 8000 //process.env.PORT ? process.env.PORT : 8000;
-app.listen(port, () =>
+app.listen(port = 8000, () =>
   console.log(`Listening on port ${port}...`)
 );
 

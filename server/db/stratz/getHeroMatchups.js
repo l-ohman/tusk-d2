@@ -3,16 +3,16 @@ const fetchStratz = require("./fetchStratz");
 const { Hero, HeroMatchups } = require("../models/Hero");
 
 // temp constants
-const gameVersions = [
-  {
-    id: 154,
-    name: "7.32",
-  },
-  {
-    id: 155,
-    name: "7.32b",
-  },
-];
+// const gameVersions = [
+//   {
+//     id: 154,
+//     name: "7.32",
+//   },
+//   {
+//     id: 155,
+//     name: "7.32b",
+//   },
+// ];
 
 // Gets hero data based for n number of weeks, defaults to 1
 const createWinrateQuery = (weekCount) => {
@@ -51,13 +51,16 @@ const createMatchupQuery = (heroId) => {
 };
 
 const getHeroById = async (heroId) => {
-  return await Hero.findOne({
+  return await HeroMatchups.findOne({
     where: {
       id: heroId,
     },
   });
 };
 const calculateWinrate = (win, total) => {
+  if (isNaN(win) || isNaN(total)) {
+    throw new Error("One entry in the winrate calculation is not a number!");
+  }
   return ((win / total) * 100).toPrecision(5);
 };
 
@@ -70,10 +73,10 @@ const addAllHeroesWinrates = async (weekCount = 1) => {
     const heroData = allHeroData[i];
 
     const hero = await getHeroById(heroData.heroId);
-    const heroWinrate = (
-      (heroData.winCount / heroData.matchCount) *
-      100
-    ).toPrecision(5);
+    const heroWinrate = calculateWinrate(
+      heroData.winCount,
+      heroData.matchCount
+    );
     await hero.update({ winrate: heroWinrate });
   }
   console.log("Base hero winrates successfully added to DB");
@@ -83,19 +86,28 @@ const addAllHeroesWinrates = async (weekCount = 1) => {
 const updateSingleHeroData = async (heroId) => {
   const response = await fetchStratz(createMatchupQuery(heroId));
   const data = response.data.heroStats.heroVsHeroMatchup.advantage[0];
-  // 'data' refers to an object containing 2 arrays, with keys 'vs' and 'with'
-  const heroInDb = await getHeroById(heroId);
+
+  const heroInDb = await getHeroById(data.heroId);
   console.log(`Writing matchup data for hero ${data.heroId}...`);
 
   let withData = data.with;
   let againstData = data.vs;
+
   // Adding winrates to each item in the arrays
   withData = withData.map((relation) => {
-    relation.winrate = calculateWinrate(relation.winCount, relation.matchCount);
+    relation.winrate = +calculateWinrate(
+      relation.winCount,
+      relation.matchCount
+    );
+    delete relation.winCount;
     return relation;
   });
   againstData = againstData.map((relation) => {
-    relation.winrate = calculateWinrate(relation.winCount, relation.MatchCount);
+    relation.winrate = +calculateWinrate(
+      relation.winCount,
+      relation.matchCount
+    );
+    delete relation.winCount;
     return relation;
   });
 
@@ -108,15 +120,19 @@ const updateSingleHeroData = async (heroId) => {
 };
 
 const addAllHeroesMatchups = async () => {
-    const allHeroes = await Hero.findAll();
-    for (let i = 0; i < allHeroes.length; i++) {
-        let thisHero = allHeroes[i];
-        await updateSingleHeroData(thisHero.id);
-    }
-    console.log('successfully updated data for all heroes.')
+  const allHeroes = await Hero.findAll();
+  for (let i = 0; i < allHeroes.length; i++) {
+    let thisHero = allHeroes[i];
+    await updateSingleHeroData(thisHero.id);
+  }
+  console.log("Successfully updated data for all heroes");
+};
+
+const seedAllData = async () => {
+    await addAllHeroesWinrates();
+    await addAllHeroesMatchups();
 }
 
 if (require.main === module) {
-//   addAllHeroesWinrates();
-    addAllHeroesMatchups(); // hardcoding test for 'drow ranger'
+    seedAllData();
 }

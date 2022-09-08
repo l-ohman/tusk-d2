@@ -2,6 +2,7 @@
 const Sequelize = require("sequelize");
 const db = require("../database");
 
+// This table excludes the relationships (for ease of use);
 const Hero = db.define(
   "hero",
   {
@@ -12,6 +13,18 @@ const Hero = db.define(
     },
     name: {
       type: Sequelize.STRING,
+      allowNull: false,
+    },
+  },
+  { timestamps: false }
+);
+
+const HeroMatchups = db.define(
+  "hero_matchups",
+  {
+    id: {
+      type: Sequelize.INTEGER,
+      primaryKey: true,
       allowNull: false,
     },
     winrate: {
@@ -28,24 +41,4 @@ const Hero = db.define(
   { timestamps: false }
 );
 
-// const HeroMatchups = db.define(
-//   "hero_matchup",
-//   {
-//     withCount: {
-//       type: Sequelize.NUMBER,
-//     },
-//     withRate: {
-//       type: Sequelize.DECIMAL,
-//     },
-//     againstCount: {
-//       type: Sequelize.NUMBER,
-//     },
-//     againstRate: {
-//       type: Sequelize.DECIMAL,
-//     },
-//   },
-//   { timestamps: false }
-// );
-// Hero.belongsToMany(Hero, { through: HeroMatchups, as: "Hero2" });
-
-module.exports = { Hero };
+module.exports = { Hero, HeroMatchups };

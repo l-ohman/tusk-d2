@@ -1,10 +1,5 @@
-// Should split this into 2 categories:
-    // (1) Builds base hero table
-    // (2) Gets winrates of each hero and other necessary data
-
-const { Hero } = require('../models/Hero');
-
 const fetchStratz = require('./fetchStratz');
+const { Hero, HeroMatchups } = require('../models/Hero');
 
 // Gets hero constants from API
 const getAllHeroes = async () => {
@@ -28,6 +23,7 @@ const getAllHeroes = async () => {
 // Adds API response to SQL db
 const buildHeroTable = async () => {
     await Hero.sync({ force: true });
+    await HeroMatchups.sync({ force: true });
 
     const allHeroes = await new Promise((resolve, reject) => {
         const timer = setTimeout(() => {
@@ -41,8 +37,9 @@ const buildHeroTable = async () => {
     });
     for (let i = 0; i < allHeroes.length; i++) {
         await Hero.create(allHeroes[i]);
+        await HeroMatchups.create({ id: allHeroes[i].id});
     }
-    console.log('Hero table successfully built')
+    console.log('Hero tables successfully built')
 }
 
 if (require.main === module) { 

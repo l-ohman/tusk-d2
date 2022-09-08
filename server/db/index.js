@@ -1,7 +1,7 @@
 "use strict";
 
 const db = require("./database");
-const Hero = require("./models/Hero");
+const { Hero, HeroMatchups } = require("./models/Hero");
 const Match = require("./models/Match");
 const Team = require("./models/Team");
 
@@ -10,6 +10,5 @@ const Team = require("./models/Team");
 module.exports = {
   db,
   Hero,
-  Match,
-  Team,
+  HeroMatchups,
 };

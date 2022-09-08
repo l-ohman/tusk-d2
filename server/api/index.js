@@ -1,33 +1,31 @@
-const router = require('express').Router();
+const router = require("express").Router();
+const { Hero, HeroMatchups } = require("../db");
 
-const { db, Hero, Match, Team } = require('../db');
+// Gets all heroes with name+id (mostly for reference)
+router.get("/heroes", async (req, res, next) => {
+  try {
+    const data = await Hero.findAll();
+    res.send(data);
+  } catch (error) {
+    res.send(error.message);
+    next(error);
+  }
+});
 
-router.get('/heroes', async (req, res, next) => {
-    try {
-        const data = await Hero.findAll()
-        res.send(data);
-    } catch (error) {
-        res.send(error.message);
-        next(error);
-    }
-})
-
-router.get('/matches', async (req, res, next) => {
-    try {
-        const data = await Match.findAll();
-        res.send(data);
-    } catch (error) {
-        res.send(error.message);
-        next(error);
-    }
-})
-
-// router.post ?
+router.get("/heroes/:id", async (req, res, next) => {
+  try {
+    const data = await HeroMatchups.findByPk(req.params.id);
+    res.send(data);
+  } catch (error) {
+    res.send(error.message);
+    next(error);
+  }
+});
 
 router.use((req, res, next) => {
-    const err = new Error("404 API route not found");
-    err.status = 404;
-    next(err);
-  });
+  const err = new Error("404 API route not found");
+  err.status = 404;
+  next(err);
+});
 
 module.exports = router;

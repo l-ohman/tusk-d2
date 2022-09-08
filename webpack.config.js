@@ -1,11 +1,15 @@
+const MiniCssExtractPlugin = require("mini-css-extract-plugin");
+const path = require("path");
+
 module.exports = {
   mode: "development",
-  entry: ["./src/main.js"],
+  entry: "./src/index.js",
   output: {
-    path: __dirname,
-    filename: "./public/bundle.js",
+    path: __dirname + "/public",
+    filename: "bundle.js",
   },
   devtool: "source-map",
+  plugins: [new MiniCssExtractPlugin({ filename: "main.css" })],
   module: {
     rules: [
       {
@@ -17,6 +21,10 @@ module.exports = {
             presets: ["@babel/preset-react"],
           },
         },
+      },
+      {
+        test: /\.less$/,
+        use: [MiniCssExtractPlugin.loader, "css-loader", "less-loader"],
       },
     ],
   },

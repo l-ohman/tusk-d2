@@ -2,23 +2,21 @@
     // (1) Builds base hero table
     // (2) Gets winrates of each hero and other necessary data
 
-const Sequelize = require('sequelize');
-const db = require('./db');
-const Hero = require('../models/Hero');
+const { Hero } = require('../models/Hero');
 
-const fetchStratz = require('../api/fetchStratz');
+const fetchStratz = require('./fetchStratz');
 
 // Gets hero constants from API
 const getAllHeroes = async () => {
     const response = await fetchStratz(`
-        query HeroConstants {
-            constants {
-                heroes {
-                    id
-                    displayName
+            query HeroConstants {
+                constants {
+                    heroes {
+                        id
+                        displayName
+                    }
                 }
             }
-        }
         `);
     return response.data.constants.heroes.map(heroObj => {
         heroObj.name = heroObj.displayName.replaceAll(' ', '_');
@@ -42,8 +40,9 @@ const buildHeroTable = async () => {
         });
     });
     for (let i = 0; i < allHeroes.length; i++) {
-        Hero.create(allHeroes[i]);
+        await Hero.create(allHeroes[i]);
     }
+    console.log('Hero table successfully built')
 }
 
 if (require.main === module) { 

@@ -1,5 +1,5 @@
 const fetch = require("isomorphic-fetch");
-const key = require("./key.js");
+require('dotenv').config();
 
 const sleep = (ms) => new Promise((res) => setTimeout(res, ms));
 
@@ -8,15 +8,15 @@ const fetchStratz = async (userQuery) => {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
-      Authorization: `Bearer ${key}`,
+      Authorization: `Bearer ${process.env.KEY}`,
     },
     body: JSON.stringify({ query: userQuery }),
   });
   response = await response.json();
-
+ 
   // Self rate-limiting because fields were consistently being returned as 'null'
-  console.log("Sleeping 500ms between API calls... 💤");
-  await sleep(501);
+  console.log('Sleeping 500ms... 💤')
+  await sleep(500);
 
   return response;
 };

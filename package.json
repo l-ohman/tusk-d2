@@ -6,9 +6,9 @@
   "scripts": {
     "start": "npm run build & npm run start-server",
     "start-server": "nodemon --watch server",
-    "build": "webpack",
-    "css-watch": "less-watch-compiler public/less public",
-    "seed": "node server/seed.js"
+    "build": "webpack -w",
+    "buildBaseHeroTable": "node server/db/stratz/seedHeroes.js",
+    "updateHeroWinrates": "node server/db/stratz/getHeroMatchups.js"
   },
   "dependencies": {
     "axios": "^0.18.0",
@@ -27,10 +27,13 @@
     "@babel/preset-env": "^7.18.10",
     "@babel/preset-react": "^7.17.12",
     "babel-loader": "^8.2.5",
+    "chai": "^4.3.6",
+    "dotenv": "^16.0.2",
     "eslint": "^8.16.0",
     "eslint-plugin-react": "^7.30.0",
+    "isomorphic-fetch": "^3.0.0",
     "less": "^4.1.3",
-    "less-watch-compiler": "^1.16.3",
+    "mocha": "^10.0.0",
     "node-polyfill-webpack-plugin": "^2.0.1",
     "nodemon": "^2.0.4",
     "redux-logger": "^3.0.6",

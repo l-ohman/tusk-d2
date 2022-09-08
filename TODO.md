@@ -9,16 +9,17 @@
 
 ## Backend
 <details>
-- [ ] Setup Hero table(s)
-    - [ ] Include base hero winrate, and relationship table between heroes
-    - [ ] Include winrates with/against all other heroes
+- [x] Setup Hero table(s)
+    - [x] Include base hero winrate, and relationship table between heroes 
+    - [x] Include winrates with/against all other heroes (Currently is stored as JSON - later I may end up re-creating hero relations table with many-to-many relationship)
 - [ ] Restructure Match tables (need to rethink this entirely)
     - [ ] Implement Team tables if necessary
 - [ ] Fix Stratz queries (to get matches by league) and organize directory
     - [ ] Create easier way to add matches to DB ~~(see server/seed.js)~~
     - [ ] If possible, get patch ID (and/or possibly name) directly from Stratz query
 - [ ] Setup API routes to get info from database
-    - [ ] Use req.params to get specific db entries(?)
+    - [x] Access to hero data
+    - [ ] Access to match data
 </details>
 
 ## Frontend

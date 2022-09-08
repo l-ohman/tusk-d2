@@ -12,6 +12,7 @@ router.get("/heroes", async (req, res, next) => {
   }
 });
 
+// All matchups for a hero
 router.get("/heroes/:id", async (req, res, next) => {
   try {
     const data = await HeroMatchups.findByPk(req.params.id);

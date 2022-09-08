@@ -61,7 +61,7 @@ const calculateWinrate = (win, total) => {
   if (isNaN(win) || isNaN(total)) {
     throw new Error("One entry in the winrate calculation is not a number!");
   }
-  return ((win / total) * 100).toPrecision(5);
+  return Number(((win / total) * 100).toPrecision(5));
 };
 
 // Gets winrate for all heroes for past n weeks (currently can only handle 1)

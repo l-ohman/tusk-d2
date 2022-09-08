@@ -24,10 +24,10 @@
 
 ## Frontend
 <details>
+- [ ] Searchbar to more easily find heroes
 - [ ] Further webpack setup
     - [ ] Update paths with 'path' module
     - [ ] Compile CSS with all necessary loaders
-        - [ ] Should also extract CSS into separate file (Will need to split webpack.config at this point)
     - [ ] Switch to html template (html-webpack-plugin)
     - [ ] Use 'asset/module' to build images
 - [ ] Display all heroes and empty draft grid

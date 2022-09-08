@@ -1,10 +1,19 @@
 import React from "react";
+import { useSelector, useDispatch } from "react-redux";
+import { DraftingGrid, HeroList, Recommendations, HeroSelection } from "./";
+import { setAllHeroes } from "../store";
 
 const Root = () => {
+  const dispatch = useDispatch();
+
+  React.useEffect(() => {
+    dispatch(setAllHeroes());
+  }, [])
   
   return (
-    <div>
-      <h1>Hello world!</h1>
+    <div id="main-container">
+      <HeroList />
+      <HeroSelection />
     </div>
   );
 };

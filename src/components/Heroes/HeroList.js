@@ -1,13 +1,20 @@
 import React from "react";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
+
+import {setSelectedHero} from "../../store";
 
 function HeroList () {
     const allHeroes = useSelector(state => state.heroes);
-    console.log(allHeroes)
+    const dispatch = useDispatch();
+    
+    const handleClick = (hero) => {
+        dispatch(setSelectedHero(hero));
+    }
 
-    return(<div className="heroIconsContainer">
+    return(<div className="leftContainer heroIconsContainer">
         {allHeroes.map(hero => {
-            return <img key={hero.id} src={`assets/heroIcons/${hero.name}_icon.webp`} className="heroIconDraft"/>
+            return <img key={hero.id} src={`assets/heroIcons/${hero.name}_icon.webp`} 
+            onClick={() => handleClick(hero)} className="heroIconDraft"/>
         })}
     </div>)
 }

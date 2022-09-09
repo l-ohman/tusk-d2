@@ -1,6 +1,6 @@
 import React from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { DraftingGrid, HeroList, Recommendations, HeroSelection } from "./";
+import { CurrentTeams, HeroList, HeroRecs, HeroSelection } from "./";
 import { setAllHeroes } from "../store";
 
 const Root = () => {
@@ -8,13 +8,19 @@ const Root = () => {
 
   React.useEffect(() => {
     dispatch(setAllHeroes());
-  }, [])
-  
+  }, []);
+
   return (
-    <div id="main-container">
-      <HeroList />
-      <HeroSelection />
-    </div>
+    <>
+      <div id="main-container">
+        <HeroList />
+        <div className="rightContainer">
+          <HeroSelection />
+          <CurrentTeams />
+        </div>
+      </div>
+      <HeroRecs />
+    </>
   );
 };
 

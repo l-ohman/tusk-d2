@@ -10,7 +10,8 @@ let initState = {
   teams: {
     radiant: [],
     dire: [],
-  }
+  },
+  // matchupData: {},
 };
 
 // action types
@@ -18,6 +19,7 @@ const SET_HERO_LIST = "SET_HERO_LIST";
 const GET_HERO_DATA = "GET_HERO_DATA";
 const SET_SELECTED_HERO = "SET_SELECTED_HERO";
 const ADD_HERO_TO_TEAM = "ADD_HERO_TO_TEAM";
+// const SET_MATCHUP_DATA = "SET_MATCHUP_DATA";
 
 // actions creators
 const setHeroList = (heroes) => ({
@@ -38,6 +40,10 @@ export const addHeroToTeam = (hero, team) => ({
   hero,
   team,
 })
+// export const setMatchupData = (matchupData) => ({
+//   type: SET_MATCHUP_DATA,
+//   matchupData,
+// })
 
 // thunks
 export const setAllHeroes = () => async (dispatch) => {
@@ -59,7 +65,6 @@ export const setAllHeroes = () => async (dispatch) => {
 export const fetchHeroData = (heroId) => async (dispatch) => {
   try {
     const { data } = await axios.get(`/api/heroes/${heroId}`);
-    console.log('data: ', data)
     dispatch(getHeroData(data));
   } catch (error) {
     console.error(error);
@@ -73,7 +78,6 @@ const reducer = (state = initState, action) => {
     case GET_HERO_DATA:
       let newHero = {}
       newHero[action.id] = action.heroData;
-
       return {...state, heroData: {...state.heroData, ...newHero}};
     case SET_SELECTED_HERO:
       return {...state, selectedHero: action.hero};
@@ -81,6 +85,8 @@ const reducer = (state = initState, action) => {
       let teams = {...state.teams};
       teams[action.team].push(action.hero);
       return {...state, teams}
+    // case SET_MATCHUP_DATA:
+    //   return {...state, matchupData: action.matchupData};
     default:
       return state;
   }

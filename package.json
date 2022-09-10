@@ -7,9 +7,7 @@
     "start": "npm run build & npm run start-server",
     "start-server": "nodemon --watch server",
     "build": "webpack -w",
-    "buildHeroStats": "npm run buildBaseHeroTables && npm run updateHeroWinrates",
-    "buildBaseHeroTables": "node server/db/stratz/seedHeroes.js",
-    "updateHeroWinrates": "node server/db/stratz/getHeroMatchups.js"
+    "buildHeroMatchups": "node server/db/stratz/getHeroMatchups.js"
   },
   "dependencies": {
     "axios": "^0.18.0",

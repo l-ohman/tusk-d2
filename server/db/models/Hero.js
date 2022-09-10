@@ -2,43 +2,26 @@
 const Sequelize = require("sequelize");
 const db = require("../database");
 
-// This table excludes the relationships (for ease of use);
-const Hero = db.define(
-  "hero",
-  {
-    id: {
-      type: Sequelize.INTEGER,
-      primaryKey: true,
-      allowNull: false,
-    },
-    name: {
-      type: Sequelize.STRING,
-      allowNull: false,
-    },
-  },
-  { timestamps: false }
-);
-
 const HeroMatchups = db.define(
-  "hero_matchups",
+  "hero_matchup",
   {
     id: {
       type: Sequelize.INTEGER,
       primaryKey: true,
       allowNull: false,
     },
-    winrate: {
+    baseWinrate: {
       type: Sequelize.DECIMAL,
     },
     // Using JSON like this is not ideal but will suffice until I can figure out self many-to-many relations
-    withMatchups: {
+    with: {
       type: Sequelize.JSON,
     },
-    againstMatchups: {
+    vs: {
       type: Sequelize.JSON,
     },
   },
   { timestamps: false }
 );
 
-module.exports = { Hero, HeroMatchups };
+module.exports = { HeroMatchups };

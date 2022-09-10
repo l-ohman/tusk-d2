@@ -3,4 +3,5 @@ bundle.js
 bundle.js.map
 main.css
 main.css.map
+tmp.js
 *.env

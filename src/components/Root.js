@@ -1,6 +1,13 @@
 import React from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { CurrentTeams, HeroList, HeroRecs, HeroSelection } from "./";
+import {
+  Header,
+  Footer,
+  CurrentTeams,
+  HeroList,
+  HeroRecs,
+  HeroSelection,
+} from "./";
 import { setAllHeroes } from "../store";
 
 const Root = () => {
@@ -12,14 +19,20 @@ const Root = () => {
 
   return (
     <>
-      <div id="main-container">
-        <HeroList />
-        <div className="rightContainer">
-          <HeroSelection />
-          <CurrentTeams />
+      <div id="page-container">
+        <Header />
+
+        <div id="draft-container">
+          <HeroList />
+          <div className="rightContainer">
+            <HeroSelection />
+            <CurrentTeams />
+          </div>
         </div>
+
+        <HeroRecs />
       </div>
-      <HeroRecs />
+      <Footer />
     </>
   );
 };

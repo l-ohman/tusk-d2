@@ -4,8 +4,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { fetchHeroData } from "../../store";
 import SingleTeam from "./SingleTeam";
 
-
-function CurrentTeams() {
+export default function CurrentTeams() {
   const teams = useSelector((state) => state.teams);
   const dispatch = useDispatch();
 
@@ -29,5 +28,3 @@ function CurrentTeams() {
     </div>
   );
 }
-
-export default CurrentTeams;

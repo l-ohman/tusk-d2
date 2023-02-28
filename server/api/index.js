@@ -1,10 +1,17 @@
 const router = require("express").Router();
-const { Hero, HeroMatchups } = require("../db");
+const { HeroMatchups } = require("../db");
+const { heroes } = require("../../dotaConstants")
 
-// Gets all heroes with name+id (mostly for reference)
+// Gets all heroes with baseWinrate and primary stat (this probably won't be used for anything)
 router.get("/heroes", async (req, res, next) => {
   try {
-    const data = await Hero.findAll();
+    let data = await HeroMatchups.findAll();
+    data = data.map(hero => {
+      return { id: hero.id, name: heroes[hero.id].name, winrate: +hero.baseWinrate, stat: heroes[hero.id].stat }
+    }).sort((a, b) => {
+      if (a.id < b.id) return -1;
+      else return 0;
+    });
     res.send(data);
   } catch (error) {
     res.send(error.message);

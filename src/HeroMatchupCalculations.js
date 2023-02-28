@@ -44,7 +44,7 @@ export const buildMatchupData = (allHeroes, allHeroData, selectedHeroes) => {
     let matchupData = initMatchupData(allHeroes);
 
     selectedHeroes.radiant.forEach(hero => {
-        console.log(`Adding matchup data for ${hero.name}!`);
+        console.log(`Adding matchup data for ${hero.name}`);
         const thisHeroData = allHeroData[hero.id];
         addOneHeroMatchups('radiant', thisHeroData, matchupData);
     })

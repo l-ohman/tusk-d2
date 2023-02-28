@@ -1,5 +1,4 @@
 ## General
-- [x] Come up with a sick name (like *Zeus*)
 - [ ] Hero winrate analysis
     - [ ] Ability to estimate winrate based on draft
     - [ ] A tool to suggest picks/bans at different points within the draft

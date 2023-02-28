@@ -1,5 +1,5 @@
 {
-  "name": "dota-2-statistics-analysis",
+  "name": "tusk-dota-2-statistics-analysis",
   "version": "0.0.1",
   "description": "",
   "main": "server/index.js",
@@ -7,7 +7,7 @@
     "start": "npm run build & npm run start-server",
     "start-server": "nodemon --watch server",
     "build": "webpack -w",
-    "buildHeroMatchups": "node server/db/stratz/getHeroMatchups.js"
+    "fetch-hero-matchups": "node server/db/stratz/getHeroMatchups.js"
   },
   "dependencies": {
     "axios": "^0.18.0",

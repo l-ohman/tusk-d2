@@ -4,7 +4,7 @@ import Matchups from "./Matchup";
 import { buildMatchupData } from "../../HeroMatchupCalculations";
 // import { setMatchupData } from "../../store";
 
-function HeroRecs() {
+export default function HeroRecommendations() {
   const state = useSelector((state) => state);
   // const dispatch = useDispatch();
   const [matchupData, setMatchupData] = React.useState({});
@@ -16,7 +16,7 @@ function HeroRecs() {
       state.teams
     );
     setMatchupData(newMatchupData);
-    console.log("matchup data: ", newMatchupData);
+    // console.log("matchup data: ", newMatchupData);
   };
 
   return (
@@ -33,5 +33,3 @@ function HeroRecs() {
     </>
   );
 }
-
-export default HeroRecs;

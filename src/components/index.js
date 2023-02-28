@@ -1,10 +1,10 @@
 import Header from "./Header";
 import Footer from "./Footer";
-import CurrentTeams from "./Heroes/CurrentTeams";
-import HeroList from "./Heroes/HeroList";
-import HeroRecs from "./Heroes/HeroRecs";
-import HeroSelection from "./Heroes/HeroSelection";
-import SingleTeam from "./Heroes/SingleTeam";
-import Matchups from "./Heroes/Matchup";
+import CurrentTeams from "./heroes/CurrentTeams";
+import HeroList from "./heroes/HeroList";
+import HeroRecommendations from "./heroes/HeroRecommendations";
+import HeroSelection from "./heroes/HeroSelection";
+import SingleTeam from "./heroes/SingleTeam";
+import Matchups from "./heroes/Matchup";
 
-export { Header, Footer, CurrentTeams, SingleTeam, HeroList, HeroRecs, HeroSelection, Matchups };
+export { Header, Footer, CurrentTeams, SingleTeam, HeroList, HeroRecommendations, HeroSelection, Matchups };

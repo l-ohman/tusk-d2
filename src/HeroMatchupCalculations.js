@@ -11,26 +11,24 @@ const initMatchupData = (allHeroes) => {
 }
 
 // team as "radiant" or "dire"; heroData as matchups for 1 hero; matchupData contains a value for each hero
-const addOneHeroMatchups = (team, heroData, matchupData) => {
-
+const addOneHeroMatchups = (heroData, matchupData, isRadiant) => {
     // let baseWinrate = +heroData.winrate;
-    let againstMatchups = heroData.vs;
-    let withMatchups = heroData.with;
+    const againstMatchups = heroData.vs;
+    const withMatchups = heroData.with;
 
-    // if team is 'radiant' that means ally heroes; else it is 'dire', meaning enemy heroes
-    if (team === "radiant") {
-        withMatchups.forEach(matchup => {
-            matchupData[matchup.heroId2].valueWith += matchup.winrate;
+    if (isRadiant) {
+        Object.keys(withMatchups).forEach(heroId => {
+            matchupData[heroId].valueWith += withMatchups[heroId].winrate;
         });
-        againstMatchups.forEach(matchup => {
-            matchupData[matchup.heroId2].valueAgainst += matchup.winrate;
+        Object.keys(againstMatchups).forEach(heroId => {
+            matchupData[heroId].valueAgainst += againstMatchups[heroId].winrate;
         });
     } else {
-        withMatchups.forEach(matchup => {
-            matchupData[matchup.heroId2].valueAgainst += matchup.winrate;
+        Object.keys(withMatchups).forEach(heroId => {
+            matchupData[heroId].valueWith += withMatchups[heroId].winrate;
         });
-        againstMatchups.forEach(matchup => {
-            matchupData[matchup.heroId2].valueWith += matchup.winrate;
+        Object.keys(againstMatchups).forEach(heroId => {
+            matchupData[heroId].valueAgainst += againstMatchups[heroId].winrate;
         });
     }
     // Need to find a way to account for heroes that do not have matchup data with/against the hero in question - maybe just add their base winrate and console.log "no matchup for {x} pair"
@@ -39,19 +37,19 @@ const addOneHeroMatchups = (team, heroData, matchupData) => {
 
 // allHeroData containing all heroe data from store, selectedHeroes is teamsObj from store
 export const buildMatchupData = (allHeroes, allHeroData, selectedHeroes) => {
-    console.log("Building matchup data...")
+    // console.log("Building matchup data...")
 
     let matchupData = initMatchupData(allHeroes);
 
     selectedHeroes.radiant.forEach(hero => {
-        console.log(`Adding matchup data for ${hero.name}`);
+        // console.log(`Adding matchup data for ${hero.name}`);
         const thisHeroData = allHeroData[hero.id];
-        addOneHeroMatchups('radiant', thisHeroData, matchupData);
+        addOneHeroMatchups(thisHeroData, matchupData, true);
     })
     selectedHeroes.dire.forEach(hero => {
-        console.log(`Adding matchup data for ${hero.name}`);
+        // console.log(`Adding matchup data for ${hero.name}`);
         const thisHeroData = allHeroData[hero.id];
-        addOneHeroMatchups('dire', thisHeroData, matchupData);
+        addOneHeroMatchups(thisHeroData, matchupData, false);
     })
 
     return matchupData;

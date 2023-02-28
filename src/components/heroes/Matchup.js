@@ -59,9 +59,9 @@ function Matchups({ team, against, data }) {
   };
 
   React.useEffect(() => {
-    console.log("sorting heroes...");
+    // console.log("sorting heroes...");
     sortMatchupValuesForDisplay();
-    console.log("number of heroes selected: ", heroCount);
+    // console.log("number of heroes selected: ", heroCount);
   }, [data]);
 
   return (
@@ -74,30 +74,36 @@ function Matchups({ team, against, data }) {
       <div>
         {/* {Should filter out heroes with 0, and group them at bottom} */}
         {against
-          ? sortedByValueAgainst.map((hero) => {
-              return (
-                <>
-                  <div className="heroInMatchupList">
-                    <img src={`assets/heroIcons/${hero.name}_icon.webp`} />
-                    <p>{hero.name}</p>
-                    <p>{hero.value}</p>
-                  </div>
-                  <hr />
-                </>
-              );
-            })
-          : sortedByValueWith.map((hero) => {
-              return (
-                <>
-                  <div className="heroInMatchupList">
-                    <img src={`assets/heroIcons/${hero.name}_icon.webp`} />
-                    <p>{hero.name}</p>
-                    <p>{hero.value}</p>
-                  </div>
-                  <hr />
-                </>
-              );
-            })}
+          ? sortedByValueAgainst.map((hero) => (
+              <div key={hero.id}>
+                <div className="heroInMatchupList">
+                  <img
+                    src={`assets/heroIcons/${hero.name.replaceAll(
+                      " ",
+                      "_"
+                    )}_icon.webp`}
+                  />
+                  <p>{hero.name}</p>
+                  <p>{hero.value}</p>
+                </div>
+                <hr />
+              </div>
+            ))
+          : sortedByValueWith.map((hero) => (
+              <div key={hero.id}>
+                <div className="heroInMatchupList">
+                  <img
+                    src={`assets/heroIcons/${hero.name.replaceAll(
+                      " ",
+                      "_"
+                    )}_icon.webp`}
+                  />
+                  <p>{hero.name}</p>
+                  <p>{hero.value}</p>
+                </div>
+                <hr />
+              </div>
+            ))}
       </div>
     </div>
   );

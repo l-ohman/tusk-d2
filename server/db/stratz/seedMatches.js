@@ -1,3 +1,5 @@
+// This feature is not currently in use
+
 // Creates query for Stratz API based on specified league ID, then adds those matches to 'Match' table
 const Sequelize = require('sequelize');
 const db = require('./db');

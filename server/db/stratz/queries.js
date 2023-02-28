@@ -2,7 +2,7 @@
 const createWinrateQuery = (weekCount) => {
   return `query getHeroWinrates {
           heroStats {
-              winWeek(bracketIds: [DIVINE, IMMORTAL], take: ${weekCount}) {
+              winWeek(bracketIds: [CRUSADER, ARCHON, LEGEND, ANCIENT, DIVINE, IMMORTAL], take: ${weekCount}) {
                   heroId
                   matchCount
                   winCount

@@ -1,4 +1,4 @@
-// Base winrates are from only Divine/Immortal bracket, and matchups are from Crusader-Immortal brackets
+// winrates and matchups from Crusader to Immortal brackets (brackets 3-8)
 const fetchStratz = require("./fetchStratz");
 const { HeroMatchups } = require("../models/Hero");
 const { createWinrateQuery, createMatchupQuery } = require("./queries");
@@ -48,8 +48,7 @@ const addAllHeroesWinrates = async (weekCount = 1) => {
 };
 
 const restructureMatchupObject = (matchup) => {
-  // Change 'heroId2' to 'id'
-  matchup.id = matchup.heroId2;
+  id = matchup.heroId2;
   delete matchup.heroId2;
 
   // Convert 'matchCount' and 'winCount' to winrate
@@ -59,11 +58,10 @@ const restructureMatchupObject = (matchup) => {
   // Use both heroes' winrates to calculate 'difference'
   let avgWinrate = (matchup.winRateHeroId1 + matchup.winRateHeroId2) * 50;
   matchup.difference = roundToTwoDecimals(matchup.winrate - avgWinrate);
-
   delete matchup.winRateHeroId1;
   delete matchup.winRateHeroId2;
 
-  return matchup;
+  return [id, matchup];
 };
 
 // Gets matchups for a single hero
@@ -71,20 +69,25 @@ const updateSingleHeroMatchups = async (heroId) => {
   let { data } = await fetchStratz(createMatchupQuery(heroId));
   data = data.heroStats.matchUp[0];
 
-  let withData = data.with;
-  let againstData = data.vs;
+  // comes as an array of objects from stratz
+  const withData = data.with;
+  const againstData = data.vs;
+  const withMatchups = {}
+  const againstMatchups = {};
 
-  withData = withData.map((matchup) => {
-    return restructureMatchupObject(matchup);
+  withData.forEach(itm => {
+    const [id, matchup] = restructureMatchupObject(itm);
+    withMatchups[id] = matchup;
   });
-  againstData = againstData.map((matchup) => {
-    return restructureMatchupObject(matchup);
+  againstData.forEach(itm => {
+    const [id, matchup] = restructureMatchupObject(itm);
+    againstMatchups[id] = matchup;
   });
 
   const heroInDb = await getHeroInDataBase(data.heroId);
   await heroInDb.update({
-    with: withData,
-    vs: againstData,
+    with: withMatchups,
+    vs: againstMatchups,
   });
   console.log(`Matchups successfully added for hero ${data.heroId} (${heroes[data.heroId].name})`);
 };

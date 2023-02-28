@@ -1,3 +1,5 @@
+// This feature is not currently in use
+
 const fetchStratz = require("../fetchStratz");
 
 // Technically can get 100 matches per query, but there is an error with the reponse - the "pickBans" field sometimes returns null (consistently alternates between 10 valid drafts and 10 null drafts)

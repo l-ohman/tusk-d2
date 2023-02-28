@@ -13,7 +13,7 @@ const HeroMatchups = db.define(
     baseWinrate: {
       type: Sequelize.DECIMAL,
     },
-    // Using JSON like this is not ideal but will suffice until I can figure out self many-to-many relations
+    // Using JSON like this is not ideal but will suffice until I can figure out complex reflexive many-to-many relations
     with: {
       type: Sequelize.JSON,
     },

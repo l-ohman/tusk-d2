@@ -14,8 +14,8 @@ const initMatchupData = (allHeroes) => {
 const addOneHeroMatchups = (team, heroData, matchupData) => {
 
     // let baseWinrate = +heroData.winrate;
-    let againstMatchups = heroData.againstMatchups;
-    let withMatchups = heroData.withMatchups;
+    let againstMatchups = heroData.vs;
+    let withMatchups = heroData.with;
 
     // if team is 'radiant' that means ally heroes; else it is 'dire', meaning enemy heroes
     if (team === "radiant") {

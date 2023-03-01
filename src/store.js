@@ -11,7 +11,6 @@ const initState = {
     radiant: [],
     dire: [],
   },
-  bannedHeroes: [],
 };
 
 // action types
@@ -20,6 +19,7 @@ const GET_HERO_DATA = "GET_HERO_DATA";
 const SET_SELECTED_HERO = "SET_SELECTED_HERO";
 const ADD_HERO_TO_TEAM = "ADD_HERO_TO_TEAM";
 // const UPDATE_MATCHUP_VALUES = "UPDATE_MATCHUP_VALUES";
+const BAN_HERO = "BAN_HERO";
 
 // actions creators
 const setHeroList = (heroes) => ({
@@ -40,6 +40,10 @@ export const addHeroToTeam = (hero, team) => ({
   hero,
   team,
 });
+export const makeHeroIdUnselectable = (heroId) => ({
+  type: BAN_HERO,
+  heroId
+})
 
 // thunks
 export const setAllHeroes = () => async (dispatch) => {
@@ -52,6 +56,7 @@ export const setAllHeroes = () => async (dispatch) => {
       data[idx].synergyRating = 0;
       data[idx].detailedCounters = [];
       data[idx].detailedSynergies = [];
+      data[idx].selectable = true;
       heroesObject[hero.id] = hero;
     });
 
@@ -111,6 +116,9 @@ const reducer = (state = initState, action) => {
       const teams = { ...state.teams };
       teams[action.team].push(action.hero);
       return { ...state, teams };
+    case BAN_HERO:
+      state.heroes[action.heroId].selectable = false;
+      return state;
     default:
       return state;
   }

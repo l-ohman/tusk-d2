@@ -18,14 +18,14 @@ function Matchups({ team, update }) {
     if (team === "Radiant") {
       // best picks for radiant
       for (const heroId in allHeroes) {
-        if (draftedHeroes.includes(+heroId)) continue;
+        if (!allHeroes[heroId].selectable) continue;
         sortedHeroes.push(allHeroes[+heroId]);
       }
       sortedHeroes.sort((a, b) => b.synergyRating - a.synergyRating);
     } else {
       // best picks for dire
       for (const heroId in allHeroes) {
-        if (draftedHeroes.includes(+heroId)) continue;
+        if (!allHeroes[heroId].selectable) continue;
         sortedHeroes.push(allHeroes[+heroId]);
       }
       sortedHeroes.sort((a, b) => a.counterRating - b.counterRating);

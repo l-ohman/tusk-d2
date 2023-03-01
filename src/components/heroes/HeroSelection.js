@@ -1,14 +1,21 @@
 import React from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { addHeroToTeam, fetchHeroData } from "../../store";
+import { addHeroToTeam, fetchHeroData, banHeroId, setSelectedHero, makeHeroIdUnselectable } from "../../store";
 
 function HeroSelection() {
   const selectedHero = useSelector((state) => state.selectedHero);
   const dispatch = useDispatch();
 
-  const handleClick = async (hero, team) => {
+  const handlePick = async (hero, team) => {
     dispatch(addHeroToTeam(hero, team));
     await dispatch(fetchHeroData(hero.id));
+    dispatch(setSelectedHero({}));
+    dispatch(makeHeroIdUnselectable(hero.id));
+  };
+
+  const banHero = (hero) => {
+    dispatch(makeHeroIdUnselectable(hero.id));
+    dispatch(setSelectedHero({}));
   };
 
   if (selectedHero.id) {
@@ -25,11 +32,14 @@ function HeroSelection() {
           className="heroSelected"
         />
         <hr />
-        <button onClick={() => handleClick(selectedHero, "radiant")}>
+        <button onClick={() => handlePick(selectedHero, "radiant")}>
           Add hero to radiant
         </button>
-        <button onClick={() => handleClick(selectedHero, "dire")}>
+        <button onClick={() => handlePick(selectedHero, "dire")}>
           Add hero to dire
+        </button>
+        <button onClick={() => banHero(selectedHero)}>
+          Ban hero
         </button>
       </div>
     );

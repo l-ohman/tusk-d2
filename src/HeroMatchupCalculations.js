@@ -3,8 +3,8 @@ const initMatchupData = (allHeroes) => {
     let matchupData = {}
     allHeroes.forEach(hero => {
         matchupData[hero.id] = {
-            valueWith: 0,
-            valueAgainst: 0,
+            winrateWith: 0,
+            winrateAgainst: 0,
         }
     })
     return matchupData;
@@ -18,17 +18,17 @@ const addOneHeroMatchups = (heroData, matchupData, isRadiant) => {
 
     if (isRadiant) {
         Object.keys(withMatchups).forEach(heroId => {
-            matchupData[heroId].valueWith += withMatchups[heroId].winrate;
+            matchupData[heroId].winrateWith += withMatchups[heroId].winrate;
         });
         Object.keys(againstMatchups).forEach(heroId => {
-            matchupData[heroId].valueAgainst += againstMatchups[heroId].winrate;
+            matchupData[heroId].winrateAgainst += againstMatchups[heroId].winrate;
         });
     } else {
         Object.keys(withMatchups).forEach(heroId => {
-            matchupData[heroId].valueWith += withMatchups[heroId].winrate;
+            matchupData[heroId].winrateWith += withMatchups[heroId].winrate;
         });
         Object.keys(againstMatchups).forEach(heroId => {
-            matchupData[heroId].valueAgainst += againstMatchups[heroId].winrate;
+            matchupData[heroId].winrateAgainst += againstMatchups[heroId].winrate;
         });
     }
     // Need to find a way to account for heroes that do not have matchup data with/against the hero in question - maybe just add their base winrate and console.log "no matchup for {x} pair"

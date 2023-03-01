@@ -1,13 +1,14 @@
 import React from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { addHeroToTeam } from "../../store";
+import { addHeroToTeam, fetchHeroData } from "../../store";
 
 function HeroSelection() {
   const selectedHero = useSelector((state) => state.selectedHero);
   const dispatch = useDispatch();
 
-  const handleClick = (hero, team) => {
+  const handleClick = async (hero, team) => {
     dispatch(addHeroToTeam(hero, team));
+    await dispatch(fetchHeroData(hero.id));
   };
 
   if (selectedHero.id) {

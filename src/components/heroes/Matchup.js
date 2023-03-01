@@ -1,78 +1,61 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 
 function Matchups({ team, against, data }) {
   const allHeroes = useSelector((state) => state.heroes);
   const teams = useSelector((state) => state.teams);
-  // const thisTeam = teams[team];
 
-  let heroCount = teams.radiant.length + teams.dire.length;
-
-  const [sortedByValueWith, setSortedByValueWith] = React.useState([]);
-  const [sortedByValueAgainst, setSortedByValueAgainst] = React.useState([]);
+  const [sortedByValueWith, setSortedByValueWith] = useState([]);
+  const [sortedByValueAgainst, setSortedByValueAgainst] = useState([]);
 
   // the 'against' boolean will determine sorting method of matchup data
   const sortMatchupValuesForDisplay = () => {
+    const heroCount = teams.radiant.length + teams.dire.length;
+    const draftedHeroes = [...teams.radiant.map(hero => hero.id), ...teams.dire.map(hero => hero.id)];
+    // console.log(draftedHeroes);
+    let sortedHeroes = [];
+
     if (!against) {
-      // Best PICKS for Radiant
-      let sortedHeroes = [];
-
-      // makes a new object for each hero and pushes into an array
-      for (let heroId in data) {
-        let heroObj = {
+      // best picks for radiant
+      for (const heroId in data) {
+        if (draftedHeroes.includes(+heroId)) continue;
+        sortedHeroes.push({
           id: heroId,
           name: allHeroes.find((item) => item.id === +heroId).name,
-          value: data[heroId].valueWith.toPrecision(4),
-        };
-        sortedHeroes.push(heroObj);
+          value: (Number(data[heroId].winrateWith) / heroCount).toPrecision(4),
+        });
       }
-      // sorts the array by value
-      sortedHeroes.sort((a, b) => {
-        if (+a.value < +b.value) return 1;
-        else return -1;
-      });
-
+      sortedHeroes.sort((a, b) => (a.value < b.value ? 1 : -1));
       setSortedByValueWith(sortedHeroes);
-      // console.log('Sorted by "with" value', sortedHeroes);
     } else if (against) {
-      // Best BANS for Radiant
-      let sortedHeroes = [];
-
-      // makes a new object for each hero and pushes into an array
-      for (let heroId in data) {
-        let heroObj = {
+      // best bans for radiant
+      for (const heroId in data) {
+        if (draftedHeroes.includes(+heroId)) continue;
+        sortedHeroes.push({
           id: heroId,
           name: allHeroes.find((item) => item.id === +heroId).name,
-          value: data[heroId].valueAgainst.toPrecision(4),
-        };
-        sortedHeroes.push(heroObj);
+          value: (
+            100 -
+            Number(data[heroId].winrateAgainst) / heroCount
+          ).toPrecision(4),
+        });
       }
-      // sorts the array by value
-      sortedHeroes.sort((a, b) => {
-        if (+a.value < +b.value) return 1;
-        else return -1;
-      });
-
+      sortedHeroes.sort((a, b) => (a.value < b.value ? 1 : -1));
       setSortedByValueAgainst(sortedHeroes);
-      // console.log('Sorted by "against" value', sortedHeroes);
     }
   };
 
-  React.useEffect(() => {
-    // console.log("sorting heroes...");
+  useEffect(() => {
     sortMatchupValuesForDisplay();
-    // console.log("number of heroes selected: ", heroCount);
   }, [data]);
 
   return (
     <div className="individualMatchupCont">
       <h2>
-        {against ? "Best Bans for " : "Best Picks for "}
-        {team[0].toUpperCase() + team.slice(1)}
+        {`Best Picks for ${against ? "Dire" : "Radiant"}`}
       </h2>
 
       <div>
-        {/* {Should filter out heroes with 0, and group them at bottom} */}
         {against
           ? sortedByValueAgainst.map((hero) => (
               <div key={hero.id}>

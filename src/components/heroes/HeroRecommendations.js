@@ -10,19 +10,18 @@ export default function HeroRecommendations() {
   const [matchupData, setMatchupData] = React.useState({});
 
   const setData = () => {
-    let newMatchupData = buildMatchupData(
+    const newMatchupData = buildMatchupData(
       state.heroes,
-      state.heroData,
+      state.selectedHeroesData,
       state.teams
     );
     setMatchupData(newMatchupData);
-    // console.log("matchup data: ", newMatchupData);
   };
 
   return (
     <>
       <div className="tmpCenter">
-        <button onClick={() => setData()}>Get matchups</button>
+        <button onClick={() => setData()}>Show best picks</button>
       </div>
       <div className="matchupContainer">
         <Matchups team="radiant" against={false} data={matchupData} />

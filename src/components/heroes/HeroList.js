@@ -8,10 +8,11 @@ function HeroList() {
 
   return (
     <div className="leftContainer heroIconsContainer">
-      {allHeroes.map((hero) => {
+      {Object.keys(allHeroes).map((heroId) => {
+        const hero = allHeroes[heroId];
         return (
           <img
-            key={hero.id}
+            key={heroId}
             src={`assets/heroIcons/${hero.name.replaceAll(" ", "_")}_icon.webp`}
             alt={`${hero.name} icon`}
             onClick={() => dispatch(setSelectedHero(hero))}

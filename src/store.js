@@ -3,15 +3,15 @@ import { createStore, applyMiddleware } from "redux";
 import thunk from "redux-thunk";
 import loggingMiddleware from "redux-logger";
 
-let initState = {
-  heroes: [],
-  heroData: {},
+const initState = {
+  heroes: {}, // all heroes with id as key, value as with {name, winrate, primary attribute, counters, synergies}
+  selectedHeroesData: {}, // data for heroes currently in draft
   selectedHero: {},
   teams: {
     radiant: [],
     dire: [],
   },
-  // matchupData: {},
+  bannedHeroes: [],
 };
 
 // action types
@@ -19,7 +19,6 @@ const SET_HERO_LIST = "SET_HERO_LIST";
 const GET_HERO_DATA = "GET_HERO_DATA";
 const SET_SELECTED_HERO = "SET_SELECTED_HERO";
 const ADD_HERO_TO_TEAM = "ADD_HERO_TO_TEAM";
-// const SET_MATCHUP_DATA = "SET_MATCHUP_DATA";
 
 // actions creators
 const setHeroList = (heroes) => ({
@@ -34,29 +33,28 @@ const getHeroData = (heroData) => ({
 export const setSelectedHero = (hero) => ({
   type: SET_SELECTED_HERO,
   hero,
-})
+});
 export const addHeroToTeam = (hero, team) => ({
   type: ADD_HERO_TO_TEAM,
   hero,
   team,
-})
-// export const setMatchupData = (matchupData) => ({
-//   type: SET_MATCHUP_DATA,
-//   matchupData,
-// })
+});
 
 // thunks
 export const setAllHeroes = () => async (dispatch) => {
   try {
     const { data } = await axios.get("/api/heroes");
-    
-    // temporarily(?) sorting the heroes alphabetically here
-    data.sort((a, b) => {
-      if (a.name < b.name) return -1;
-      if (b.name > a.name) return 1;
-    })
 
-    dispatch(setHeroList(data));
+    const heroesObject = {};
+    data.forEach((hero, idx) => {
+      data[idx].counterRating = 0;
+      data[idx].synergyRating = 0;
+      data[idx].detailedCounters = [];
+      data[idx].detailedSynergies = [];
+      heroesObject[hero.id] = hero;
+    });
+
+    dispatch(setHeroList(heroesObject));
   } catch (error) {
     console.error(error);
   }
@@ -76,17 +74,33 @@ const reducer = (state = initState, action) => {
     case SET_HERO_LIST:
       return { ...state, heroes: action.heroes };
     case GET_HERO_DATA:
-      let newHero = {}
-      newHero[action.id] = action.heroData;
-      return {...state, heroData: {...state.heroData, ...newHero}};
+      const newHero = { [action.id]: action.heroData };
+      for (const heroId in action.heroData.vs) {
+        if (Object.keys(state.selectedHeroesData).includes(hero => hero.id === heroId)) {
+          console.log("Here:", heroId);
+          continue;
+        };
+
+        state.heroes[heroId].detailedCounters.push({
+          heroId: action.id,
+          value: action.heroData.vs[heroId].difference,
+        });
+        state.heroes[heroId].detailedSynergies.push({
+          heroId: action.id,
+          value: action.heroData.with[heroId].difference,
+        });
+      }
+
+      return {
+        ...state,
+        selectedHeroesData: { ...state.selectedHeroesData, ...newHero },
+      };
     case SET_SELECTED_HERO:
-      return {...state, selectedHero: action.hero};
+      return { ...state, selectedHero: action.hero };
     case ADD_HERO_TO_TEAM:
-      let teams = {...state.teams};
+      const teams = { ...state.teams };
       teams[action.team].push(action.hero);
-      return {...state, teams}
-    // case SET_MATCHUP_DATA:
-    //   return {...state, matchupData: action.matchupData};
+      return { ...state, teams };
     default:
       return state;
   }

@@ -1,33 +1,30 @@
-import React from "react";
-import { useSelector, useDispatch } from "react-redux";
+import React, { useState, useEffect } from "react";
+// import { useSelector, useDispatch } from "react-redux";
 import Matchups from "./Matchup";
-import { buildMatchupData } from "../../HeroMatchupCalculations";
+// import { buildMatchupData } from "../../HeroMatchupCalculations";
 // import { setMatchupData } from "../../store";
 
 export default function HeroRecommendations() {
-  const state = useSelector((state) => state);
-  // const dispatch = useDispatch();
-  const [matchupData, setMatchupData] = React.useState({});
+  const [update, setUpdate] = useState(false);
+  
+  useEffect(() => {
+    if (update === true) {
+      setUpdate(false);
+    }
+  }, [update]);
 
-  const setData = () => {
-    const newMatchupData = buildMatchupData(
-      state.heroes,
-      state.selectedHeroesData,
-      state.teams
-    );
-    setMatchupData(newMatchupData);
-  };
+  const showBestPicks = () => {
+    setUpdate(true);
+  }
 
   return (
     <>
       <div className="tmpCenter">
-        <button onClick={() => setData()}>Show best picks</button>
+        <button onClick={() => showBestPicks()}>Show best picks</button>
       </div>
       <div className="matchupContainer">
-        <Matchups team="radiant" against={false} data={matchupData} />
-        <Matchups team="radiant" against={true} data={matchupData} />
-        {/* <Matchups team="dire" against={false} />
-        <Matchups team="dire" against={true} /> */}
+        <Matchups team="Radiant" update={update} />
+        <Matchups team="Dire" update={update} />
       </div>
     </>
   );

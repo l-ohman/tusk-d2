@@ -29,6 +29,7 @@
     - [ ] Use 'asset/module' to build images
 - [x] Display all heroes
 - [ ] Ability to ban heroes (and remove from suggestions)
+- [ ] Add "expand matchups" button to show detailed counters/synergies per suggestion
 - [ ] Display empty draft grid (with order)
 - [ ] Upgrade Redux to RTK or Zustand
 </details>

@@ -19,6 +19,7 @@ const SET_HERO_LIST = "SET_HERO_LIST";
 const GET_HERO_DATA = "GET_HERO_DATA";
 const SET_SELECTED_HERO = "SET_SELECTED_HERO";
 const ADD_HERO_TO_TEAM = "ADD_HERO_TO_TEAM";
+// const UPDATE_MATCHUP_VALUES = "UPDATE_MATCHUP_VALUES";
 
 // actions creators
 const setHeroList = (heroes) => ({
@@ -76,19 +77,28 @@ const reducer = (state = initState, action) => {
     case GET_HERO_DATA:
       const newHero = { [action.id]: action.heroData };
       for (const heroId in action.heroData.vs) {
-        if (Object.keys(state.selectedHeroesData).includes(hero => hero.id === heroId)) {
-          console.log("Here:", heroId);
-          continue;
-        };
+        // if you're reading this, i'm sorry
+        if (Object.keys(state.selectedHeroesData).includes(hero => hero.id === heroId)) continue;
 
         state.heroes[heroId].detailedCounters.push({
           heroId: action.id,
           value: action.heroData.vs[heroId].difference,
         });
+        state.heroes[heroId].counterRating +=
+          action.heroData.vs[heroId].difference;
+        state.heroes[heroId].counterRating = Number(
+          state.heroes[heroId].counterRating.toPrecision(4)
+        );
+
         state.heroes[heroId].detailedSynergies.push({
           heroId: action.id,
           value: action.heroData.with[heroId].difference,
         });
+        state.heroes[heroId].synergyRating +=
+          action.heroData.with[heroId].difference;
+        state.heroes[heroId].synergyRating = Number(
+          state.heroes[heroId].synergyRating.toPrecision(4)
+        );
       }
 
       return {

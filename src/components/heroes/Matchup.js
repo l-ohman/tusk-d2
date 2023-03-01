@@ -1,92 +1,66 @@
 import React, { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 
-function Matchups({ team, against, data }) {
+function Matchups({ team, update }) {
   const allHeroes = useSelector((state) => state.heroes);
   const teams = useSelector((state) => state.teams);
 
-  const [sortedByValueWith, setSortedByValueWith] = useState([]);
-  const [sortedByValueAgainst, setSortedByValueAgainst] = useState([]);
+  const [heroesSortedByValue, setHeroesSortedByValue] = useState([]);
 
   // the 'against' boolean will determine sorting method of matchup data
   const sortMatchupValuesForDisplay = () => {
-    const heroCount = teams.radiant.length + teams.dire.length;
-    const draftedHeroes = [...teams.radiant.map(hero => hero.id), ...teams.dire.map(hero => hero.id)];
-    // console.log(draftedHeroes);
-    let sortedHeroes = [];
+    const draftedHeroes = [
+      ...teams.radiant.map((hero) => hero.id),
+      ...teams.dire.map((hero) => hero.id),
+    ];
+    const sortedHeroes = [];
 
-    if (!against) {
+    if (team === "Radiant") {
       // best picks for radiant
-      for (const heroId in data) {
+      for (const heroId in allHeroes) {
         if (draftedHeroes.includes(+heroId)) continue;
-        sortedHeroes.push({
-          id: heroId,
-          name: allHeroes.find((item) => item.id === +heroId).name,
-          value: (Number(data[heroId].winrateWith) / heroCount).toPrecision(4),
-        });
+        sortedHeroes.push(allHeroes[+heroId]);
       }
-      sortedHeroes.sort((a, b) => (a.value < b.value ? 1 : -1));
-      setSortedByValueWith(sortedHeroes);
-    } else if (against) {
-      // best bans for radiant
-      for (const heroId in data) {
+      sortedHeroes.sort((a, b) => b.synergyRating - a.synergyRating);
+    } else {
+      // best picks for dire
+      for (const heroId in allHeroes) {
         if (draftedHeroes.includes(+heroId)) continue;
-        sortedHeroes.push({
-          id: heroId,
-          name: allHeroes.find((item) => item.id === +heroId).name,
-          value: (
-            100 -
-            Number(data[heroId].winrateAgainst) / heroCount
-          ).toPrecision(4),
-        });
+        sortedHeroes.push(allHeroes[+heroId]);
       }
-      sortedHeroes.sort((a, b) => (a.value < b.value ? 1 : -1));
-      setSortedByValueAgainst(sortedHeroes);
+      sortedHeroes.sort((a, b) => a.counterRating - b.counterRating);
     }
+    setHeroesSortedByValue(sortedHeroes);
   };
 
   useEffect(() => {
-    sortMatchupValuesForDisplay();
-  }, [data]);
+    if (update === true) {
+      sortMatchupValuesForDisplay();
+    }
+  }, [update]);
 
   return (
     <div className="individualMatchupCont">
-      <h2>
-        {`Best Picks for ${against ? "Dire" : "Radiant"}`}
-      </h2>
+      <h2>{`Best Picks for ${team}`}</h2>
 
       <div>
-        {against
-          ? sortedByValueAgainst.map((hero) => (
-              <div key={hero.id}>
-                <div className="heroInMatchupList">
-                  <img
-                    src={`assets/heroIcons/${hero.name.replaceAll(
-                      " ",
-                      "_"
-                    )}_icon.webp`}
-                  />
-                  <p>{hero.name}</p>
-                  <p>{hero.value}</p>
-                </div>
-                <hr />
-              </div>
-            ))
-          : sortedByValueWith.map((hero) => (
-              <div key={hero.id}>
-                <div className="heroInMatchupList">
-                  <img
-                    src={`assets/heroIcons/${hero.name.replaceAll(
-                      " ",
-                      "_"
-                    )}_icon.webp`}
-                  />
-                  <p>{hero.name}</p>
-                  <p>{hero.value}</p>
-                </div>
-                <hr />
-              </div>
-            ))}
+        {heroesSortedByValue.map((hero) => (
+          <div key={hero.id}>
+            <div className="heroInMatchupList">
+              <img
+                src={`assets/heroIcons/${hero.name.replaceAll(
+                  " ",
+                  "_"
+                )}_icon.webp`}
+              />
+              <p>{hero.name}</p>
+              <p>
+                {team === "Radiant" ? hero.synergyRating : hero.counterRating}
+              </p>
+            </div>
+            <hr />
+          </div>
+        ))}
       </div>
     </div>
   );

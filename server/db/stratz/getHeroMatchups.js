@@ -4,8 +4,8 @@ const { HeroMatchups } = require("../models/Hero");
 const { createWinrateQuery, createMatchupQuery } = require("./queries");
 const { heroes } = require("../../../dotaConstants");
 
-// Utility functions
-const getHeroInDataBase = async (heroId) => {
+// Utility functions //
+const getHeroById = async (heroId) => {
   return await HeroMatchups.findOne({
     where: { id: heroId },
   });
@@ -14,11 +14,8 @@ const calculateWinrate = (win, total) => {
   if (isNaN(win) || isNaN(total)) {
     throw new Error("One entry in the winrate calculation is not a number");
   }
-  return Number(((win / total) * 100).toPrecision(4));
+  return Number((win / total).toPrecision(5));
 };
-const roundToTwoDecimals = (num) => {
-  return ((Math.round(Number(num) * 100)) / 100)
-}
 
 // Clears 'hero_matchups' table if it exists, creates a new table otherwise
 const buildHeroTable = async () => {
@@ -30,14 +27,14 @@ const buildHeroTable = async () => {
 };
 
 // Gets baseWinrate for all heroes for past (n) weeks (currently only handles 1)
-const addAllHeroesWinrates = async (weekCount = 1) => {
+const fetchAllHeroesWinrates = async (weekCount = 1) => {
   let { data } = await fetchStratz(createWinrateQuery(weekCount));
   data = data.heroStats.winWeek;
 
   for (let i = 0; i < data.length; i++) {
     const heroData = data[i];
 
-    const hero = await getHeroInDataBase(heroData.heroId);
+    const hero = await getHeroById(heroData.heroId);
     const heroWinrate = calculateWinrate(
       heroData.winCount,
       heroData.matchCount
@@ -47,53 +44,82 @@ const addAllHeroesWinrates = async (weekCount = 1) => {
   console.log("Base hero winrates successfully added to DB");
 };
 
-const restructureMatchupObject = (matchup) => {
+const restructureMatchupObject = (matchup, isCounter) => {
   id = matchup.heroId2;
   delete matchup.heroId2;
 
-  // Convert 'matchCount' and 'winCount' to winrate
-  matchup.winrate = calculateWinrate(matchup.winCount, matchup.matchCount);
+  matchup.winrate = Number(
+    (matchup.winCount / matchup.matchCount).toPrecision(4)
+  );
   delete matchup.winCount;
 
-  // Use both heroes' winrates to calculate 'difference'
-  let avgWinrate = (matchup.winRateHeroId1 + matchup.winRateHeroId2) * 50;
-  matchup.difference = roundToTwoDecimals(matchup.winrate - avgWinrate);
+  if (isCounter) {
+    matchup.difference = calculateCounter(
+      matchup.winrate,
+      matchup.winRateHeroId1,
+      matchup.winRateHeroId2
+    );
+  } else {
+    matchup.difference = calculateSynergy(
+      matchup.winrate,
+      matchup.winRateHeroId1,
+      matchup.winRateHeroId2
+    );
+  }
+
   delete matchup.winRateHeroId1;
   delete matchup.winRateHeroId2;
-
   return [id, matchup];
 };
+
+function calculateCounter(observedWinrate, winrate1, winrate2) {
+  return Number(
+    ((observedWinrate - (0.5 + winrate1 - winrate2)) * 100).toPrecision(4)
+  );
+}
+// i need a stratz dev to explain this to me
+function calculateSynergy(observedWinrate, winrate1, winrate2) {
+  return Number(
+    (
+      (observedWinrate - (-0.48 + (0.98 * winrate1) + (0.98 * winrate2))) *
+      100
+    ).toPrecision(4)
+  );
+}
 
 // Gets matchups for a single hero
 const updateSingleHeroMatchups = async (heroId) => {
   let { data } = await fetchStratz(createMatchupQuery(heroId));
   data = data.heroStats.matchUp[0];
 
-  // comes as an array of objects from stratz
   const withData = data.with;
   const againstData = data.vs;
-  const withMatchups = {}
+  const withMatchups = {};
   const againstMatchups = {};
 
-  withData.forEach(itm => {
-    const [id, matchup] = restructureMatchupObject(itm);
+  withData.forEach((itm) => {
+    const [id, matchup] = restructureMatchupObject(itm, false);
     withMatchups[id] = matchup;
   });
-  againstData.forEach(itm => {
-    const [id, matchup] = restructureMatchupObject(itm);
+  againstData.forEach((itm) => {
+    const [id, matchup] = restructureMatchupObject(itm, true);
     againstMatchups[id] = matchup;
   });
 
-  const heroInDb = await getHeroInDataBase(data.heroId);
+  const heroInDb = await getHeroById(data.heroId);
   await heroInDb.update({
     with: withMatchups,
     vs: againstMatchups,
   });
-  console.log(`Matchups successfully added for hero ${data.heroId} (${heroes[data.heroId].name})`);
+  console.log(
+    `Matchups successfully added for hero ${data.heroId} (${
+      heroes[data.heroId].name
+    })`
+  );
 };
 
-const addAllHeroesMatchups = async () => {
-  for (let heroId in heroes) {
+const fetchAllHeroesMatchups = async () => {
+  for (const heroId in heroes) {
     await updateSingleHeroMatchups(heroId);
   }
   console.log("Successfully updated data for all heroes");
@@ -101,8 +127,8 @@ const addAllHeroesMatchups = async () => {
 
 const updateAllData = async () => {
   await buildHeroTable();
-  await addAllHeroesWinrates();
-  await addAllHeroesMatchups();
+  await fetchAllHeroesWinrates();
+  await fetchAllHeroesMatchups();
 };
 
 if (require.main === module) {

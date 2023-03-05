@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { setSelectedHero } from "../../store";
 
-function HeroList() {
+export default function HeroList() {
   const allHeroes = useSelector((state) => state.heroes);
   const selectedHero = useSelector(state => state.selectedHero);
   const dispatch = useDispatch();
@@ -38,5 +38,3 @@ function HeroList() {
     </>
   );
 }
-
-export default HeroList;

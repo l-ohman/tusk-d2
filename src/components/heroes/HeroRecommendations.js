@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 // import { useSelector, useDispatch } from "react-redux";
-import Matchups from "./Matchup";
+import Matchups from "./Matchups";
 // import { buildMatchupData } from "../../HeroMatchupCalculations";
 // import { setMatchupData } from "../../store";
 
@@ -20,7 +20,7 @@ export default function HeroRecommendations() {
   return (
     <>
       <div className="tmpCenter">
-        <button onClick={() => showBestPicks()}>Show best picks</button>
+        <button onClick={() => showBestPicks()}>Update recommendations</button>
       </div>
       <div className="matchupContainer">
         <Matchups team="Radiant" update={update} />

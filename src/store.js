@@ -10,6 +10,7 @@ const initState = {
   teams: {
     radiant: [],
     dire: [],
+    banned: [],
   },
 };
 
@@ -20,6 +21,7 @@ const SET_SELECTED_HERO = "SET_SELECTED_HERO";
 const ADD_HERO_TO_TEAM = "ADD_HERO_TO_TEAM";
 // const UPDATE_MATCHUP_VALUES = "UPDATE_MATCHUP_VALUES";
 const BAN_HERO = "BAN_HERO";
+const MAKE_UNSELECTABLE = "MAKE_UNSELECTABLE";
 
 // actions creators
 const setHeroList = (heroes) => ({
@@ -40,10 +42,14 @@ export const addHeroToTeam = (hero, team) => ({
   hero,
   team,
 });
-export const makeHeroIdUnselectable = (heroId) => ({
+export const banHeroId = (heroId) => ({
   type: BAN_HERO,
-  heroId
-})
+  heroId,
+});
+export const makeHeroIdUnselectable = (heroId) => ({
+  type: MAKE_UNSELECTABLE,
+  heroId,
+});
 
 // thunks
 export const setAllHeroes = () => async (dispatch) => {
@@ -83,7 +89,12 @@ const reducer = (state = initState, action) => {
       const newHero = { [action.id]: action.heroData };
       for (const heroId in action.heroData.vs) {
         // if you're reading this, i'm sorry
-        if (Object.keys(state.selectedHeroesData).includes(hero => hero.id === heroId)) continue;
+        if (
+          Object.keys(state.selectedHeroesData).includes(
+            (hero) => hero.id === heroId
+          )
+        )
+          continue;
 
         state.heroes[heroId].detailedCounters.push({
           heroId: action.id,
@@ -117,6 +128,9 @@ const reducer = (state = initState, action) => {
       teams[action.team].push(action.hero);
       return { ...state, teams };
     case BAN_HERO:
+      state.teams.banned.push(action.heroId);
+      return state;
+    case MAKE_UNSELECTABLE:
       state.heroes[action.heroId].selectable = false;
       return state;
     default:

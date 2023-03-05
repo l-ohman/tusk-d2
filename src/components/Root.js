@@ -7,6 +7,7 @@ import {
   HeroList,
   HeroRecommendations,
   HeroSelection,
+  BannedHeroes,
 } from "./";
 import { setAllHeroes } from "../store";
 
@@ -27,12 +28,13 @@ const Root = () => {
           <div className="rightContainer">
             <HeroSelection />
             <CurrentTeams />
+            {/* <BannedHeroes /> */}
           </div>
         </div>
 
         <HeroRecommendations />
       </div>
-      <Footer />
+      {/* <Footer /> */}
     </>
   );
 };

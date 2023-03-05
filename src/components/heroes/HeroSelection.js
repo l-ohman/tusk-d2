@@ -14,6 +14,8 @@ function HeroSelection() {
   };
 
   const banHero = (hero) => {
+    // yikes
+    dispatch(banHeroId(hero.id));
     dispatch(makeHeroIdUnselectable(hero.id));
     dispatch(setSelectedHero({}));
   };

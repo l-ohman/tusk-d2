@@ -2,7 +2,7 @@
 const fetchStratz = require("./fetchStratz");
 const { HeroMatchups } = require("../models/Hero");
 const { createWinrateQuery, createMatchupQuery } = require("./queries");
-const { heroes } = require("../../../dotaConstants");
+const heroes = require("../../heroes.json")
 
 // Utility functions //
 const getHeroById = async (heroId) => {
@@ -33,7 +33,8 @@ const fetchAllHeroesWinrates = async (weekCount = 1) => {
 
   for (let i = 0; i < data.length; i++) {
     const heroData = data[i];
-
+    if (heroData.heroId == 138) continue;
+    
     const hero = await getHeroById(heroData.heroId);
     const heroWinrate = calculateWinrate(
       heroData.winCount,

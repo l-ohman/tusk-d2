@@ -1,6 +1,6 @@
 const router = require("express").Router();
 const { HeroMatchups } = require("../db");
-const { heroes } = require("../../dotaConstants")
+const heroes = require("../heroes.json")
 
 // Gets all heroes with baseWinrate and primary stat (this probably won't be used for anything)
 router.get("/heroes", async (req, res, next) => {

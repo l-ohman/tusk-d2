@@ -20,7 +20,13 @@
     margin: 3px;
   }
   .unselectable {
-    filter: grayscale(100%) brightness(0.8);
+    filter: grayscale(100%) brightness(0.75);
+    &:hover {
+      transform: scale(1);
+    }
+  }
+  .banned {
+    filter: grayscale(100%);
     &:hover {
       transform: scale(1);
     }

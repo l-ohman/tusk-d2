@@ -28,7 +28,7 @@ const Root = () => {
           <div className="rightContainer">
             <HeroSelection />
             <CurrentTeams />
-            {/* <BannedHeroes /> */}
+            <BannedHeroes />
           </div>
         </div>
 

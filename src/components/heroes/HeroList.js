@@ -28,7 +28,7 @@ export default function HeroList() {
                 key={heroId}
                 src={`assets/heroIcons/${hero.name.replaceAll(" ", "_")}_icon.webp`}
                 alt={`${hero.name} icon`}
-                onClick={hero.selectable ? () => dispatch(setSelectedHero(hero)) : () => alert("That hero is already selected/banned")}
+                onClick={hero.selectable ? () => dispatch(setSelectedHero(hero)) : () => alert(`${hero.name} is already picked/banned`)}
                 className={`heroIconDraft${!hero.selectable ? " unselectable" : heroSearch.length <= 1 ? "" : hero.name.toLowerCase().includes(heroSearch.toLowerCase())? " matchSearch" : " doesNotMatchSearch"}`}
               />
             );

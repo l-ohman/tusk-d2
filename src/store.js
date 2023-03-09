@@ -128,8 +128,9 @@ const reducer = (state = initState, action) => {
       teams[action.team].push(action.hero);
       return { ...state, teams };
     case BAN_HERO:
-      state.teams.banned.push(action.heroId);
-      return state;
+      const updatedTeams = state.teams;
+      updatedTeams.banned.push(action.heroId);
+      return { ...state, teams: updatedTeams };
     case MAKE_UNSELECTABLE:
       state.heroes[action.heroId].selectable = false;
       return state;

@@ -1,12 +1,9 @@
 import React, { useState, useEffect } from "react";
-// import { useSelector, useDispatch } from "react-redux";
 import Matchups from "./Matchups";
-// import { buildMatchupData } from "../../HeroMatchupCalculations";
-// import { setMatchupData } from "../../store";
 
 export default function HeroRecommendations() {
   const [update, setUpdate] = useState(false);
-  
+
   useEffect(() => {
     if (update === true) {
       setUpdate(false);
@@ -15,7 +12,7 @@ export default function HeroRecommendations() {
 
   const showBestPicks = () => {
     setUpdate(true);
-  }
+  };
 
   return (
     <>

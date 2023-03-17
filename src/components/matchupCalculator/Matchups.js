@@ -3,16 +3,11 @@ import { useSelector } from "react-redux";
 
 export default function Matchups({ team, update }) {
   const allHeroes = useSelector((state) => state.heroes);
-  // const teams = useSelector((state) => state.teams);
 
   const [heroesSortedByValue, setHeroesSortedByValue] = useState([]);
 
   // the 'against' boolean will determine sorting method of matchup data
   const sortMatchupValuesForDisplay = () => {
-    // const draftedHeroes = [
-    //   ...teams.radiant.map((hero) => hero.id),
-    //   ...teams.dire.map((hero) => hero.id),
-    // ];
     const sortedHeroes = [];
 
     if (team === "Radiant") {

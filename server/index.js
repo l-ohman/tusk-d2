@@ -3,22 +3,18 @@ const path = require("path");
 
 const app = express();
 
-// middleware
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
-
 app.use(express.static(path.join(__dirname, '../public')))
+app.use("/api", require("./api"));
 
-app.get("/", (req, res, next) => {
+app.get("*", (req, res, next) => {
   try {
     res.sendFile(path.join(__dirname, "../public/index.html"));
   } catch (error) {
     next(error);
   }
 })
-
-// API routes
-app.use("/api", require("./api"));
 
 // Error handling
 app.use((err, req, res, next) => {

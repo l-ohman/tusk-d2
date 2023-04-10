@@ -7,5 +7,6 @@ import HeroSelection from "./matchupCalculator/HeroSelection";
 import SingleTeam from "./matchupCalculator/SingleTeam";
 import Matchups from "./matchupCalculator/Matchups";
 import BannedHeroes from "./matchupCalculator/BannedHeroes";
+import SingleHeroData from "./singleMatchupViewer/SingleHeroData";
 
-export { Header, Footer, CurrentTeams, SingleTeam, HeroList, HeroRecommendations, HeroSelection, Matchups, BannedHeroes };
+export { Header, Footer, CurrentTeams, SingleTeam, HeroList, HeroRecommendations, HeroSelection, Matchups, BannedHeroes, SingleHeroData };

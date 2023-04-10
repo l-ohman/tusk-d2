@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 
-export default function Matchups({ team, update }) {
+export default function Matchups({ team, update, side }) {
   const allHeroes = useSelector((state) => state.heroes);
 
   const [heroesSortedByValue, setHeroesSortedByValue] = useState([]);
@@ -36,7 +36,7 @@ export default function Matchups({ team, update }) {
 
   return (
     <div className="individualMatchupCont">
-      <h2 className="teamRecommendationsHeader">{`Best Picks for ${team}`}</h2>
+      <h2 className="teamRecommendationsHeader">{team ? `Best Picks for ${team}` : `Best ${side}`}</h2>
 
       <div>
         {heroesSortedByValue.map((hero) => (

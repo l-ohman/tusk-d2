@@ -1,5 +1,6 @@
 @import "draft.less";
 @import "header.less";
+@import "matchup.less";
 @mainColor: rgb(54, 65, 68);
 
 * {
@@ -20,19 +21,7 @@ body {
   margin-bottom: 2em;
 }
 
-#draft-container {
-  display: flex;
-  flex-direction: row;
-  justify-content: center;
-
-  .leftContainer,
-  .rightContainer {
-    margin: 35px 10px;
-  }
-  .leftContainer {
-    width: 50%;
-  }
-  .rightContainer {
-    width: 35%;
-  }
+#contentHeader {
+  text-align: center;
+  margin: 0.3em auto 0.15em;
 }

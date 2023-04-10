@@ -1,12 +1,25 @@
-import React, { useState } from "react";
-import { useSelector } from "react-redux";
+import React, { useState, useEffect } from "react";
+import { useSelector, useDispatch } from "react-redux";
 import { HeroList, Matchups, SingleHeroData } from "../components";
 import { fetchHeroData } from "../store";
 
 export default function SingleMatchupViewer() {
-  // const [heroData, setSelectedHero] = useState("");
+  const [update, setUpdate] = useState(false);
   const selectedHero = useSelector((state) => state.selectedHero);
-  console.log("selected hero:", selectedHero?.name);
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    if (selectedHero.id) getHero();
+  }, [selectedHero]);
+
+  const getHero = async () => {
+    await dispatch(fetchHeroData(selectedHero.id));
+    setUpdate(true);
+    // .....
+    if (update === true) {
+      setUpdate(false);
+    }
+  }
 
   return (
     <div id="singleMatchupViewer">
@@ -14,10 +27,10 @@ export default function SingleMatchupViewer() {
       <HeroList />
       {selectedHero.id ? (
         <>
-          <SingleHeroData hero={selectedHero}/>
+          <SingleHeroData hero={selectedHero} />
           <div className="matchupContainer">
-            <Matchups side="With" hero={selectedHero.name} />
-            <Matchups side="Against" hero={selectedHero.name} />
+            <Matchups side="With" hero={selectedHero.name} update={update} />
+            <Matchups side="Against" hero={selectedHero.name} update={update} />
           </div>
         </>
       ) : (

@@ -3,17 +3,16 @@ import { useSelector } from "react-redux";
 
 export default function Matchups({ team, update, side }) {
   const allHeroes = useSelector((state) => state.heroes);
-
   const [heroesSortedByValue, setHeroesSortedByValue] = useState([]);
 
-  // the 'against' boolean will determine sorting method of matchup data
   const sortMatchupValuesForDisplay = () => {
     const sortedHeroes = [];
 
-    if (team === "Radiant") {
+    if (team === "Radiant" || side === "With") {
       // best picks for radiant
       for (const heroId in allHeroes) {
         if (!allHeroes[heroId].selectable) continue;
+        else if (allHeroes[heroId].detailedSynergies.length === 0) continue;
         sortedHeroes.push(allHeroes[+heroId]);
       }
       sortedHeroes.sort((a, b) => b.synergyRating - a.synergyRating);
@@ -21,9 +20,15 @@ export default function Matchups({ team, update, side }) {
       // best picks for dire
       for (const heroId in allHeroes) {
         if (!allHeroes[heroId].selectable) continue;
+        else if (allHeroes[heroId].detailedCounters.length === 0) continue;
         sortedHeroes.push(allHeroes[+heroId]);
       }
-      sortedHeroes.sort((a, b) => a.counterRating - b.counterRating);
+
+      if (side==="Against") {
+        sortedHeroes.sort((a, b) => b.counterRating - a.counterRating);
+      } else {
+        sortedHeroes.sort((a, b) => a.counterRating - b.counterRating);
+      }
     }
     setHeroesSortedByValue(sortedHeroes);
   };
@@ -51,7 +56,7 @@ export default function Matchups({ team, update, side }) {
               />
               <p>{hero.name}</p>
               <p>
-                {team === "Radiant" ? hero.synergyRating : hero.counterRating}
+                {team==="Radiant" || side==="With" ? hero.synergyRating : hero.counterRating}
               </p>
             </div>
           </div>

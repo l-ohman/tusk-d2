@@ -16,7 +16,7 @@ const createWinrateQuery = (weekCount) => {
 const createMatchupQuery = (heroId) => {
   return `query getHeroMatchups {
       heroStats {
-        matchUp(heroId: ${heroId}, matchLimit: 0, take: 122, bracketBasicIds: [CRUSADER_ARCHON, LEGEND_ANCIENT, DIVINE_IMMORTAL]) {
+        matchUp(heroId: ${heroId}, matchLimit: 0, take: 130, bracketBasicIds: [CRUSADER_ARCHON, LEGEND_ANCIENT, DIVINE_IMMORTAL]) {
           heroId
           vs {
             heroId2

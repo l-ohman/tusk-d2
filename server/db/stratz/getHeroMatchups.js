@@ -33,7 +33,6 @@ const fetchAllHeroesWinrates = async (weekCount = 1) => {
 
   for (let i = 0; i < data.length; i++) {
     const heroData = data[i];
-    if (heroData.heroId == 138) continue;
     
     const hero = await getHeroById(heroData.heroId);
     const heroWinrate = calculateWinrate(
@@ -93,10 +92,19 @@ const updateSingleHeroMatchups = async (heroId) => {
   let { data } = await fetchStratz(createMatchupQuery(heroId));
   data = data.heroStats.matchUp[0];
 
-  const withData = data.with;
-  const againstData = data.vs;
+  let withData;
+  let againstData;
   const withMatchups = {};
-  const againstMatchups = {};
+  const againstMatchups = {}; 
+
+  try {
+    withData = data.with;
+    againstData = data.vs;
+  } catch (error) {
+    console.error(error, "\n");
+    console.log(data)
+  }
+
 
   withData.forEach((itm) => {
     const [id, matchup] = restructureMatchupObject(itm, false);

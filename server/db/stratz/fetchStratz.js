@@ -8,7 +8,7 @@ const fetchStratz = async (userQuery) => {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
-      Authorization: `Bearer ${process.env.KEY}`,
+      Authorization: `Bearer ${process.env.API_KEY}`,
     },
     body: JSON.stringify({ query: userQuery }),
   });

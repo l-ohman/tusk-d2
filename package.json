@@ -7,6 +7,7 @@
     "dev": "npm run build & npm run server",
     "build": "webpack -w",
     "server": "nodemon --watch server",
+    "test": "mocha tests -w",
     "fetch-hero-matchups": "node server/db/stratz/getHeroMatchups.js"
   },
   "dependencies": {

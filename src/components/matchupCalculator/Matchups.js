@@ -1,11 +1,20 @@
 import React, { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
+import { BsSortDown, BsSortUpAlt } from "react-icons/bs";
 
 export default function Matchups({ team, update, side }) {
   const allHeroes = useSelector((state) => state.heroes);
+  const selectedHero = useSelector((state) => state.selectedHero);
   const [heroesSortedByValue, setHeroesSortedByValue] = useState([]);
 
-  const sortMatchupValuesForDisplay = () => {
+  const [sortOrder, setSortOrder] = useState(false);
+  const toggleSort = () => setSortOrder(!sortOrder);
+
+  useEffect(() => {
+    sortMatchupValuesForDisplay(sortOrder);
+  }, [sortOrder]);
+
+  const sortMatchupValuesForDisplay = (reverseOrder = false) => {
     const sortedHeroes = [];
 
     if (team === "Radiant" || side === "With") {
@@ -15,7 +24,11 @@ export default function Matchups({ team, update, side }) {
         else if (allHeroes[heroId].detailedSynergies.length === 0) continue;
         sortedHeroes.push(allHeroes[+heroId]);
       }
+
       sortedHeroes.sort((a, b) => b.synergyRating - a.synergyRating);
+      if (reverseOrder) {
+        sortedHeroes.reverse();
+      }
     } else {
       // best picks for dire
       for (const heroId in allHeroes) {
@@ -24,10 +37,9 @@ export default function Matchups({ team, update, side }) {
         sortedHeroes.push(allHeroes[+heroId]);
       }
 
-      if (side==="Against") {
-        sortedHeroes.sort((a, b) => b.counterRating - a.counterRating);
-      } else {
-        sortedHeroes.sort((a, b) => a.counterRating - b.counterRating);
+      sortedHeroes.sort((a, b) => a.counterRating - b.counterRating);
+      if (reverseOrder) {
+        sortedHeroes.reverse();
       }
     }
     setHeroesSortedByValue(sortedHeroes);
@@ -41,7 +53,18 @@ export default function Matchups({ team, update, side }) {
 
   return (
     <div className="individualMatchupCont">
-      <h2 className="teamRecommendationsHeader">{team ? `Best Picks for ${team}` : `Best ${side}`}</h2>
+      <div className="matchupListHeader">
+        <h3 className="teamRecommendationsHeader">
+          {team
+            ? `Best Picks for ${team}`
+            : `${sortOrder ? "Worst" : "Best"} ${side} ${selectedHero.name}`}
+        </h3>
+        {sortOrder ? (
+          <BsSortDown onClick={toggleSort} size={20} />
+        ) : (
+          <BsSortUpAlt onClick={toggleSort} size={20} />
+        )}
+      </div>
 
       <div>
         {heroesSortedByValue.map((hero) => (
@@ -56,7 +79,9 @@ export default function Matchups({ team, update, side }) {
               />
               <p>{hero.name}</p>
               <p>
-                {team==="Radiant" || side==="With" ? hero.synergyRating : hero.counterRating}
+                {team === "Radiant" || side === "With"
+                  ? hero.synergyRating
+                  : hero.counterRating}
               </p>
             </div>
           </div>

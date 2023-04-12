@@ -11,12 +11,12 @@
 - [ ] Restructure hero tables
     - [x] Some data from Stratz is incorrect - need to calculate percentages manually
     - [x] Store synergy/counter in the db
-    - [ ] Automate polling Stratz once a week and add it to pre-existing data
+    - [ ] Automate polling Stratz once a week and add it to pre-existing data <!-- Should prioritize this once db is restructured—the matchups are currently somewhat unreliable due to small sample sizes -->
 </details>
 
 ## Frontend
 <details>
-- [ ] Completely restructure store and calculations
+- [ ] Completely restructure store and calculations <!-- Move calculations and data restructure files; potentially switch state management to Zustand (or upgrade to RTK) -->
 - [x] Searchbar to more easily find heroes (should upgrade later)
 - [ ] Further webpack setup
     - [ ] Update paths with 'path' module
@@ -25,7 +25,6 @@
     - [ ] Use 'asset/module' to build images
 - [x] Display all heroes
 - [x] Ability to ban heroes (and remove from suggestions)
-- [ ] Add "expand matchups" button to show detailed counters/synergies per suggestion
+- [ ] Add "expand matchups" button to show detailed counters/synergies per suggestion <!-- Frontend Priority -->
 - [ ] Display empty draft grid (with order)
-- [ ] Upgrade Redux to RTK or Zustand
 </details>

@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import { BsSortDown, BsSortUpAlt } from "react-icons/bs";
+import MatchupHeroBreakdown from "./MatchupHeroBreakdown";
 
 export default function Matchups({ team, update, side }) {
   const allHeroes = useSelector((state) => state.heroes);
@@ -68,23 +69,12 @@ export default function Matchups({ team, update, side }) {
 
       <div>
         {heroesSortedByValue.map((hero) => (
-          <div key={hero.id}>
-            <hr />
-            <div className="heroInMatchupList">
-              <img
-                src={`assets/heroIcons/${hero.name.replaceAll(
-                  " ",
-                  "_"
-                )}_icon.webp`}
-              />
-              <p>{hero.name}</p>
-              <p>
-                {team === "Radiant" || side === "With"
-                  ? hero.synergyRating
-                  : hero.counterRating}
-              </p>
-            </div>
-          </div>
+          <MatchupHeroBreakdown
+            key={hero.id}
+            hero={hero}
+            team={team}
+            side={side}
+          />
         ))}
       </div>
     </div>

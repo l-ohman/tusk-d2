@@ -16,8 +16,8 @@ export default function MatchupHeroBreakdown({ hero, team, side }) {
         <p>{hero.name}</p>
         <p>
           {team === "Radiant" || side === "With"
-            ? hero.synergyRating.toPrecision(4)
-            : hero.counterRating.toPrecision(4)}
+            ? hero.radiantRating.toPrecision(4)
+            : hero.direRating.toPrecision(4)}
           {displayDetails ? (
             <BsQuestionCircleFill
               onClick={() => setDisplayDetails(false)}

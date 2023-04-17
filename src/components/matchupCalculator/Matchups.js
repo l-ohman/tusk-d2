@@ -26,7 +26,7 @@ export default function Matchups({ team, update, side }) {
         sortedHeroes.push(allHeroes[+heroId]);
       }
 
-      sortedHeroes.sort((a, b) => b.synergyRating - a.synergyRating);
+      sortedHeroes.sort((a, b) => b.radiantRating - a.radiantRating);
       if (reverseOrder) {
         sortedHeroes.reverse();
       }
@@ -38,7 +38,7 @@ export default function Matchups({ team, update, side }) {
         sortedHeroes.push(allHeroes[+heroId]);
       }
 
-      sortedHeroes.sort((a, b) => a.counterRating - b.counterRating);
+      sortedHeroes.sort((a, b) => a.direRating - b.direRating);
       if (reverseOrder) {
         sortedHeroes.reverse();
       }

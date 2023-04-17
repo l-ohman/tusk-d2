@@ -8,7 +8,7 @@ function HeroSelection() {
 
   const handlePick = async (hero, team) => {
     dispatch(addHeroToTeam(hero, team));
-    await dispatch(fetchHeroData(hero.id));
+    await dispatch(fetchHeroData(hero.id, team));
     dispatch(setSelectedHero({}));
     dispatch(makeHeroIdUnselectable(hero.id));
   };

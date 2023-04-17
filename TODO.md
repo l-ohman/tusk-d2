@@ -25,6 +25,6 @@
     - [ ] Use 'asset/module' to build images
 - [x] Display all heroes
 - [x] Ability to ban heroes (and remove from suggestions)
-- [ ] Add "expand matchups" button to show detailed counters/synergies per suggestion <!-- Frontend Priority -->
+- [ ] Add "expand matchups" button to show detailed counters/synergies per suggestion <!-- This is current priority — also need to fix calculations, and possibly also rename "counter/synergy" in Redux to "radiant/dire" (or team A/B) -->
 - [ ] Display empty draft grid (with order)
 </details>

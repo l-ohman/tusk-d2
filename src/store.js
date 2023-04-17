@@ -28,10 +28,11 @@ const setHeroList = (heroes) => ({
   type: SET_HERO_LIST,
   heroes,
 });
-const getHeroData = (heroData) => ({
+const getHeroData = (heroData, team) => ({
   type: GET_HERO_DATA,
   id: heroData.id,
   heroData,
+  team,
 });
 export const setSelectedHero = (hero) => ({
   type: SET_SELECTED_HERO,
@@ -58,8 +59,8 @@ export const setAllHeroes = () => async (dispatch) => {
 
     const heroesObject = {};
     data.forEach((hero, idx) => {
-      data[idx].counterRating = 0;
-      data[idx].synergyRating = 0;
+      data[idx].radiantRating = 0;
+      data[idx].direRating = 0;
       data[idx].detailedCounters = [];
       data[idx].detailedSynergies = [];
       data[idx].selectable = true;
@@ -72,10 +73,10 @@ export const setAllHeroes = () => async (dispatch) => {
   }
 };
 
-export const fetchHeroData = (heroId) => async (dispatch) => {
+export const fetchHeroData = (heroId, team) => async (dispatch) => {
   try {
     const { data } = await axios.get(`/api/heroes/${heroId}`);
-    dispatch(getHeroData(data));
+    dispatch(getHeroData(data, team));
   } catch (error) {
     console.error(error);
   }
@@ -86,9 +87,7 @@ const reducer = (state = initState, action) => {
     case SET_HERO_LIST:
       return { ...state, heroes: action.heroes };
     case GET_HERO_DATA:
-      const newHero = { [action.id]: action.heroData };
       for (const heroId in action.heroData.vs) {
-        // if you're reading this, i'm sorry
         if (
           Object.keys(state.selectedHeroesData).includes(
             (hero) => hero.id === heroId
@@ -100,23 +99,21 @@ const reducer = (state = initState, action) => {
           heroId: action.id,
           value: action.heroData.vs[heroId].difference,
         });
-        state.heroes[heroId].counterRating +=
-          action.heroData.vs[heroId].difference;
-        state.heroes[heroId].counterRating = Number(
-          state.heroes[heroId].counterRating.toPrecision(4)
-        );
-
         state.heroes[heroId].detailedSynergies.push({
           heroId: action.id,
           value: action.heroData.with[heroId].difference,
         });
-        state.heroes[heroId].synergyRating +=
-          action.heroData.with[heroId].difference;
-        state.heroes[heroId].synergyRating = Number(
-          state.heroes[heroId].synergyRating.toPrecision(4)
-        );
+        
+        if (action.team === "radiant") {
+          state.heroes[heroId].radiantRating += action.heroData.with[heroId].difference;
+          state.heroes[heroId].direRating -= action.heroData.vs[heroId].difference;
+        } else {
+          state.heroes[heroId].radiantRating -= action.heroData.with[heroId].difference;
+          state.heroes[heroId].direRating += action.heroData.vs[heroId].difference;
+        }
       }
 
+      const newHero = { [action.id]: action.heroData };
       return {
         ...state,
         selectedHeroesData: { ...state.selectedHeroesData, ...newHero },

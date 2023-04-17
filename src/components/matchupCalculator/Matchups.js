@@ -57,7 +57,7 @@ export default function Matchups({ team, update, side }) {
       <div className="matchupListHeader">
         <h3 className="teamRecommendationsHeader">
           {team
-            ? `Best Picks for ${team}`
+            ? `${sortOrder ? "Worst" : "Best"} Picks for ${team}`
             : `${sortOrder ? "Worst" : "Best"} ${side} ${selectedHero.name}`}
         </h3>
         {sortOrder ? (

@@ -41,20 +41,26 @@ export default function MatchupHeroBreakdown({ hero, team, side }) {
           {team === "Radiant"
             ? teams.radiant.map((radiantHero, idx) => {
                 return (
-                  <p key={idx}>{`Rating with ${radiantHero.name} — ${
-                    hero.detailedSynergies.find(
-                      (synergy) => synergy.heroId === radiantHero.id
-                    )?.value
-                  }`}</p>
+                  <div className="matchupDetailsItem" key={idx}>
+                    <img src={`assets/heroIcons/${radiantHero.name.replaceAll(" ", "_")}_icon.webp`}/>
+                    <p>{`With ${radiantHero.name} — ${
+                      hero.detailedSynergies.find(
+                        (synergy) => synergy.heroId === radiantHero.id
+                      )?.value
+                    }`}</p>
+                  </div>
                 );
               })
             : teams.radiant.map((radiantHero, idx) => {
                 return (
-                  <p key={idx}>{`Rating against ${radiantHero.name} — ${
-                    hero.detailedCounters.find(
-                      (counters) => counters.heroId === radiantHero.id
-                    )?.value
-                  }`}</p>
+                  <div className="matchupDetailsItem" key={idx}>
+                    <img src={`assets/heroIcons/${radiantHero.name.replaceAll(" ", "_")}_icon.webp`}/>
+                    <p>{`Against ${radiantHero.name} — ${
+                      hero.detailedCounters.find(
+                        (counters) => counters.heroId === radiantHero.id
+                      )?.value
+                    }`}</p>
+                  </div>
                 );
               })}
 
@@ -62,20 +68,26 @@ export default function MatchupHeroBreakdown({ hero, team, side }) {
           {team === "Radiant"
             ? teams.dire.map((direHero, idx) => {
                 return (
-                  <p key={idx}>{`Rating against ${direHero.name} — ${
-                    hero.detailedCounters.find(
-                      (counter) => counter.heroId === direHero.id
-                    )?.value
-                  }`}</p>
+                  <div className="matchupDetailsItem" key={idx}>
+                    <img src={`assets/heroIcons/${direHero.name.replaceAll(" ", "_")}_icon.webp`}/>
+                    <p>{`Against ${direHero.name} — ${
+                      hero.detailedCounters.find(
+                        (counter) => counter.heroId === direHero.id
+                      )?.value
+                    }`}</p>
+                  </div>
                 );
               })
             : teams.dire.map((direHero, idx) => {
                 return (
-                  <p key={idx}>{`Rating with ${direHero.name} — ${
-                    hero.detailedSynergies.find(
-                      (synergy) => synergy.heroId === direHero.id
-                    )?.value
-                  }`}</p>
+                  <div className="matchupDetailsItem" key={idx}>
+                    <img src={`assets/heroIcons/${direHero.name.replaceAll(" ", "_")}_icon.webp`}/>
+                    <p>{`With ${direHero.name} — ${
+                      hero.detailedSynergies.find(
+                        (synergy) => synergy.heroId === direHero.id
+                      )?.value
+                    }`}</p>
+                  </div>
                 );
               })}
         </div>

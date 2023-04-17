@@ -21,11 +21,10 @@ export default function HeroList() {
       <div className="leftContainer">
         <input type="text" placeholder="Search heroname..." id="heroSearch" onChange={(e) => handleSearch(e.target.value)}/>
         <div className="heroIconsContainer">
-          {Object.keys(allHeroes).map((heroId) => {
-            const hero = allHeroes[heroId];
+          {Object.values(allHeroes).sort((a, b) => a.name > b.name ? 1 : -1).map((hero) => {
             return (
               <img
-                key={heroId}
+                key={hero.id}
                 src={`assets/heroIcons/${hero.name.replaceAll(" ", "_")}_icon.webp`}
                 alt={`${hero.name} icon`}
                 onClick={hero.selectable ? () => dispatch(setSelectedHero(hero)) : () => alert(`${hero.name} is already picked/banned`)}

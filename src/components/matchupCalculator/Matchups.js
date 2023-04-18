@@ -9,39 +9,30 @@ export default function Matchups({ team, update, side }) {
   const [heroesSortedByValue, setHeroesSortedByValue] = useState([]);
 
   const [sortOrder, setSortOrder] = useState(false);
-  const toggleSort = () => setSortOrder(!sortOrder);
+  const toggleSort = () => {
+    setHeroesSortedByValue(heroesSortedByValue.reverse());
+    setSortOrder(!sortOrder);
+  }
 
-  useEffect(() => {
-    sortMatchupValuesForDisplay(sortOrder);
-  }, [sortOrder]);
-
-  const sortMatchupValuesForDisplay = (reverseOrder = false) => {
+  const sortMatchupValuesForDisplay = () => {
     const sortedHeroes = [];
 
     if (team === "Radiant" || side === "With") {
       // best picks for radiant
       for (const heroId in allHeroes) {
         if (!allHeroes[heroId].selectable) continue;
-        else if (allHeroes[heroId].detailedSynergies.length === 0) continue;
         sortedHeroes.push(allHeroes[+heroId]);
       }
 
       sortedHeroes.sort((a, b) => b.radiantRating - a.radiantRating);
-      if (reverseOrder) {
-        sortedHeroes.reverse();
-      }
     } else {
       // best picks for dire
       for (const heroId in allHeroes) {
         if (!allHeroes[heroId].selectable) continue;
-        else if (allHeroes[heroId].detailedCounters.length === 0) continue;
         sortedHeroes.push(allHeroes[+heroId]);
       }
 
       sortedHeroes.sort((a, b) => a.direRating - b.direRating);
-      if (reverseOrder) {
-        sortedHeroes.reverse();
-      }
     }
     setHeroesSortedByValue(sortedHeroes);
   };

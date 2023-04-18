@@ -45,11 +45,11 @@ const matchupCalculatorSlice = createSlice({
         const detailedMatchups =
           state.allHeroes[secondaryHeroId].detailedMatchups;
         if (isRadiant) {
-          detailedMatchups.radiant[primaryHero.id] = synergy;
-          detailedMatchups.dire[primaryHero.id] = counter;
+          detailedMatchups.radiant[primaryHero.id] = { ...synergy, with: true };
+          detailedMatchups.dire[primaryHero.id] = { ...counter, with: false };
         } else {
-          detailedMatchups.radiant[primaryHero.id] = counter;
-          detailedMatchups.dire[primaryHero.id] = synergy;
+          detailedMatchups.radiant[primaryHero.id] = { ...counter, with: false };
+          detailedMatchups.dire[primaryHero.id] = { ...synergy, with: true };
         }
       }
 

@@ -3,7 +3,8 @@ import { useSelector } from "react-redux";
 import { BsQuestionCircle, BsQuestionCircleFill } from "react-icons/bs";
 
 export default function MatchupHeroBreakdown({ hero, team, side }) {
-  const teams = useSelector((state) => state.matchupCalculator.teams);
+  const allHeroes = useSelector((state) => state.matchupCalculator.allHeroes);
+  // const teams = useSelector((state) => state.matchupCalculator.teams);
   const [displayDetails, setDisplayDetails] = useState(false);
 
   return (
@@ -39,54 +40,45 @@ export default function MatchupHeroBreakdown({ hero, team, side }) {
       {displayDetails && (
         <div className="matchupDetails">
           {team === "Radiant"
-            ? teams.radiant.map((radiantHero, idx) => {
+            ? Object.keys(hero.detailedMatchups.radiant).map(
+                (radiantHeroId) => {
+                  const radiantHero = allHeroes[radiantHeroId];
+                  const matchup = hero.detailedMatchups.radiant[radiantHeroId];
+                  return (
+                    <div className="matchupDetailsItem" key={radiantHeroId}>
+                      <img
+                        src={`assets/heroIcons/${radiantHero.name.replaceAll(
+                          " ",
+                          "_"
+                        )}_icon.webp`}
+                      />
+                      <p>
+                        {`${radiantHero.name}'s ${
+                          matchup.with ? "Synergy With" : "Value Against"
+                        } ${hero.name}: `}
+                        <b>{matchup.difference}</b>
+                      </p>
+                    </div>
+                  );
+                }
+              )
+            : Object.keys(hero.detailedMatchups.dire).map((direHeroId) => {
+                const direHero = allHeroes[direHeroId];
+                const matchup = hero.detailedMatchups.dire[direHeroId];
                 return (
-                  <div className="matchupDetailsItem" key={idx}>
-                    <img src={`assets/heroIcons/${radiantHero.name.replaceAll(" ", "_")}_icon.webp`}/>
-                    <p>{`With ${radiantHero.name} — ${
-                      hero.detailedSynergies.find(
-                        (synergy) => synergy.heroId === radiantHero.id
-                      )?.value
-                    }`}</p>
-                  </div>
-                );
-              })
-            : teams.radiant.map((radiantHero, idx) => {
-                return (
-                  <div className="matchupDetailsItem" key={idx}>
-                    <img src={`assets/heroIcons/${radiantHero.name.replaceAll(" ", "_")}_icon.webp`}/>
-                    <p>{`Against ${radiantHero.name} — ${
-                      hero.detailedCounters.find(
-                        (counters) => counters.heroId === radiantHero.id
-                      )?.value
-                    }`}</p>
-                  </div>
-                );
-              })}
-
-          {/* Iterate through Dire heroes */}
-          {team === "Radiant"
-            ? teams.dire.map((direHero, idx) => {
-                return (
-                  <div className="matchupDetailsItem" key={idx}>
-                    <img src={`assets/heroIcons/${direHero.name.replaceAll(" ", "_")}_icon.webp`}/>
-                    <p>{`Against ${direHero.name} — ${
-                      hero.detailedCounters.find(
-                        (counter) => counter.heroId === direHero.id
-                      )?.value
-                    }`}</p>
-                  </div>
-                );
-              })
-            : teams.dire.map((direHero, idx) => {
-                return (
-                  <div className="matchupDetailsItem" key={idx}>
-                    <img src={`assets/heroIcons/${direHero.name.replaceAll(" ", "_")}_icon.webp`}/>
-                    <p>{`With ${direHero.name} — ${
-                      hero.detailedSynergies.find(
-                        (synergy) => synergy.heroId === direHero.id
-                      )?.value
-                    }`}</p>
+                  <div className="matchupDetailsItem" key={direHeroId}>
+                    <img
+                      src={`assets/heroIcons/${direHero.name.replaceAll(
+                        " ",
+                        "_"
+                      )}_icon.webp`}
+                    />
+                    <p>
+                      {`${direHero.name}'s ${
+                        matchup.with ? "Synergy With" : "Value Against"
+                      } ${hero.name}: `}
+                      <b>{matchup.difference}</b>
+                    </p>
                   </div>
                 );
               })}

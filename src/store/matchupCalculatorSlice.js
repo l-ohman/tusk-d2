@@ -9,9 +9,12 @@ const initializeAllHeroes = async () => {
       ...heroList[i],
       radiantRating: 0,
       direRating: 0,
-      detailedMatchups: [],
+      detailedMatchups: {
+        radiant: {},
+        dire: {},
+      },
       selectable: true,
-      // potentially should add "low match count" flag here
+      lowMatchCount: false, // considering adding this to the matchup items in database as virtual field
     };
   }
   return allHeroes;
@@ -21,7 +24,6 @@ const matchupCalculatorSlice = createSlice({
   name: "matchupCalculatorSlice",
   initialState: {
     allHeroes: initializeAllHeroes(),
-    // draftedHeroes: {},
     selectedHero: null,
     teams: {
       radiant: {},
@@ -35,29 +37,42 @@ const matchupCalculatorSlice = createSlice({
       selectedHero: action.payload,
     }),
     addHeroToTeam: (state, action) => {
-      // For counters (vs), a larger NEGATIVE number means secondary hero is STRONGER against primary hero ---//
-      // For synergies (with), a larger POSITIVE number means secondary hero is STRONGER when paired with primary hero ---//
-      const hero = action.payload.hero;
+      // For counters (vs), a larger NEGATIVE number means secondary hero is STRONGER against primary hero
+      // For synergies (with), a larger POSITIVE number means secondary hero is STRONGER when paired with primary hero
+      const primaryHero = action.payload.hero;
       const isRadiant = action.payload.isRadiant;
 
-      // update RR and DR of every other hero; add matchup to "detailedMatchups"
-      for (const heroId in hero.with) {
-        // if selected hero is on RADIANT:
-          // add secondary hero's SYNERGY to RR
-          // add secondary hero's COUNTER to DR
-        // if selected hero is on DIRE:
-          // subtract secondary hero's COUNTER to RR
-          // subtract secondary hero's SYNERGY to DR
+      for (const secondaryHeroId in primaryHero.with) {
+        const synergy = primaryHero.with[secondaryHeroId];
+        const counter = primaryHero.vs[secondaryHeroId];
+
+        // update radiant/dire ratings
+        if (isRadiant) {
+          state.allHeroes[secondaryHeroId].radiantRating += synergy.difference;
+          state.allHeroes[secondaryHeroId].direRating += counter.difference;
+        } else {
+          state.allHeroes[secondaryHeroId].radiantRating -= counter.difference;
+          state.allHeroes[secondaryHeroId].direRating -= synergy.difference;
+        }
+
+        // add to detailedMatchups
+        const detailedMatchups =
+          state.allHeroes[secondaryHeroId].detailedMatchups;
+        if (isRadiant) {
+          detailedMatchups.radiant[primaryHero.id] = synergy;
+          detailedMatchups.dire[primaryHero.id] = counter;
+        } else {
+          detailedMatchups.radiant[primaryHero.id] = counter;
+          detailedMatchups.dire[primaryHero.id] = synergy;
+        }
       }
 
-      // add the hero in respective "teams" array
+      // add the hero in respective "teams" array and make hero unselectable
       if (isRadiant) {
         state.teams.radiant[hero.id] = hero;
       } else {
         state.teams.dire[hero.id] = hero;
       }
-
-      // make the hero no longer selectable
       state.allHeroes[hero.id].selectable = false;
     },
   },

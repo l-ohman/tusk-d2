@@ -3,7 +3,7 @@ import {
   CurrentTeams,
   HeroList,
   HeroRecommendations,
-  HeroSelection,
+  SelectedHero,
   BannedHeroes,
 } from "../components";
 
@@ -13,7 +13,7 @@ export default function MatchupCalculator() {
       <div id="draft-container">
         <HeroList />
         <div className="rightContainer">
-          <HeroSelection />
+          <SelectedHero />
           <CurrentTeams />
           <BannedHeroes />
         </div>

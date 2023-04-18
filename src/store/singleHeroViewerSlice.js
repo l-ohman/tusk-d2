@@ -3,7 +3,7 @@ import { createSlice } from "@reduxjs/toolkit";
 
 const singleHeroViewerSlice = createSlice({
   name: "singleHeroViewerSlice",
-  initialState: "Single Hero Viewer Placeholder",
+  initialState: {}, // Placeholder
   reducers: {},
 });
 

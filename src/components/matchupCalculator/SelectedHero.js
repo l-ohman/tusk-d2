@@ -1,16 +1,13 @@
 import React from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { setSelectedHero, addHeroToTeam, banHero } from "../../store/matchupCalculatorSlice";
+import { fetchAndCalculateHeroData, banHero } from "../../store/matchupCalculatorSlice";
 
-function HeroSelection() {
+export default function SelectedHero() {
   const selectedHero = useSelector((state) => state.matchupCalculator.selectedHero);
   const dispatch = useDispatch();
 
-  const handlePick = async (hero, isRadiant) => {
-    dispatch(addHeroToTeam(hero, isRadiant));
-    await dispatch(fetchHeroData(hero.id, team));
-    dispatch(setSelectedHero({}));
-    dispatch(makeHeroIdUnselectable(hero.id));
+  const handlePick = async (heroId, isRadiant) => {
+    await dispatch(fetchAndCalculateHeroData(heroId, isRadiant));
   };
 
   const banHeroId = (heroId) => {
@@ -31,10 +28,10 @@ function HeroSelection() {
           className="heroSelected"
         />
         <hr />
-        <button onClick={() => handlePick(selectedHero, true)}>
+        <button onClick={() => handlePick(selectedHero.id, true)}>
           Add hero to radiant
         </button>
-        <button onClick={() => handlePick(selectedHero, false)}>
+        <button onClick={() => handlePick(selectedHero.id, false)}>
           Add hero to dire
         </button>
         <button onClick={() => banHeroId(selectedHero.id)}>
@@ -49,5 +46,3 @@ function HeroSelection() {
       </div>
     );
 }
-
-export default HeroSelection;

@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { setSelectedHero } from "../../store";
+import { setSelectedHero } from "../../store/matchupCalculatorSlice";
 
 export default function HeroList() {
   const allHeroes = useSelector((state) => state.matchupCalculator.allHeroes);

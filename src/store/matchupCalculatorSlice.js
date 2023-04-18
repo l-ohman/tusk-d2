@@ -55,12 +55,11 @@ const matchupCalculatorSlice = createSlice({
 
       // add the primary hero to "teams" array, unselect it, and make unselectable
       if (isRadiant) {
-        state.teams.radiant[hero.id] = hero;
+        state.teams.radiant[primaryHero.id] = primaryHero;
       } else {
-        state.teams.dire[hero.id] = hero;
+        state.teams.dire[primaryHero.id] = primaryHero;
       }
-      state.allHeroes[hero.id].selectable = false;
-      state.selectedHero = null;
+      state.allHeroes[primaryHero.id].selectable = false;
 
       return state;
     },

@@ -3,7 +3,7 @@ import { createSlice } from "@reduxjs/toolkit";
 
 const buildGeneratorSlice = createSlice({
   name: "buildGeneratorSlice",
-  initialState: "Build Generator Placeholder",
+  initialState: {}, // Placeholder
   reducers: {},
 });
 

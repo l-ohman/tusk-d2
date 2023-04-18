@@ -5,6 +5,6 @@ const singleHeroViewerSlice = createSlice({
   name: "singleHeroViewerSlice",
   initialState: "Single Hero Viewer Placeholder",
   reducers: {},
-})
+});
 
-export default singleHeroViewerSlice.reducer
+export default singleHeroViewerSlice.reducer;

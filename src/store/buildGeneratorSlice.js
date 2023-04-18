@@ -5,6 +5,6 @@ const buildGeneratorSlice = createSlice({
   name: "buildGeneratorSlice",
   initialState: "Build Generator Placeholder",
   reducers: {},
-})
+});
 
-export default buildGeneratorSlice.reducer
+export default buildGeneratorSlice.reducer;

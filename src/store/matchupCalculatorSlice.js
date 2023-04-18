@@ -1,29 +1,10 @@
 import { createSlice } from "@reduxjs/toolkit";
 import axios from "axios";
 
-const initializeAllHeroes = async () => {
-  const { data: heroList } = await axios.get("/api/heroes");
-  const allHeroes = {};
-  for (let i = 0; i < heroList.length; i++) {
-    allHeroes[heroList[i].id] = {
-      ...heroList[i],
-      radiantRating: 0,
-      direRating: 0,
-      detailedMatchups: {
-        radiant: {},
-        dire: {},
-      },
-      selectable: true,
-      lowMatchCount: false, // considering adding this to the matchup items in database as virtual field
-    };
-  }
-  return allHeroes;
-};
-
 const matchupCalculatorSlice = createSlice({
   name: "matchupCalculatorSlice",
   initialState: {
-    allHeroes: initializeAllHeroes(),
+    allHeroes: {},
     selectedHero: null,
     teams: {
       radiant: {},
@@ -32,11 +13,16 @@ const matchupCalculatorSlice = createSlice({
     },
   },
   reducers: {
+    setAllHeroes: (state, action) => ({
+      ...state,
+      allHeroes: action.payload,
+    }),
     setSelectedHero: (state, action) => ({
       ...state,
       selectedHero: action.payload,
     }),
     addHeroToTeam: (state, action) => {
+      // state = { ...state };
       // For counters (vs), a larger NEGATIVE number means secondary hero is STRONGER against primary hero
       // For synergies (with), a larger POSITIVE number means secondary hero is STRONGER when paired with primary hero
       const primaryHero = action.payload.hero;
@@ -67,20 +53,46 @@ const matchupCalculatorSlice = createSlice({
         }
       }
 
-      // add the hero in respective "teams" array and make hero unselectable
+      // add the primary hero to "teams" array, unselect it, and make unselectable
       if (isRadiant) {
         state.teams.radiant[hero.id] = hero;
       } else {
         state.teams.dire[hero.id] = hero;
       }
       state.allHeroes[hero.id].selectable = false;
+      state.selectedHero = null;
+
+      return state;
+    },
+    banHero: (state, action) => {
+      console.log("Placeholder for banning hero")
+      return state;
     },
   },
 });
 
 export default matchupCalculatorSlice.reducer;
-export const { setSelectedHero, addHeroToTeam } =
+export const { setAllHeroes, setSelectedHero, addHeroToTeam, banHero } =
   matchupCalculatorSlice.actions;
+
+export const initializeAllHeroes = () => async (dispatch) => {
+  const { data: heroList } = await axios.get("/api/heroes");
+  const allHeroes = {};
+  for (let i = 0; i < heroList.length; i++) {
+    allHeroes[heroList[i].id] = {
+      ...heroList[i],
+      radiantRating: 0,
+      direRating: 0,
+      detailedMatchups: {
+        radiant: {},
+        dire: {},
+      },
+      selectable: true,
+      lowMatchCount: false, // considering adding this to the matchup items in database as virtual field
+    };
+  }
+  dispatch(setAllHeroes(allHeroes));
+};
 
 export const fetchAndCalculateHeroData =
   (heroId, isRadiant) => async (dispatch) => {

@@ -3,8 +3,8 @@ import { useSelector, useDispatch } from "react-redux";
 import { setSelectedHero } from "../../store";
 
 export default function HeroList() {
-  const allHeroes = useSelector((state) => state.heroes);
-  const selectedHero = useSelector(state => state.selectedHero);
+  const allHeroes = useSelector((state) => state.matchupCalculator.allHeroes);
+  const selectedHero = useSelector(state => state.matchupCalculator.selectedHero);
   const dispatch = useDispatch();
 
   useEffect(() => {

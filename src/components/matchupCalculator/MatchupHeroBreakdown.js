@@ -3,7 +3,7 @@ import { useSelector } from "react-redux";
 import { BsQuestionCircle, BsQuestionCircleFill } from "react-icons/bs";
 
 export default function MatchupHeroBreakdown({ hero, team, side }) {
-  const teams = useSelector((state) => state.teams);
+  const teams = useSelector((state) => state.matchupCalculator.teams);
   const [displayDetails, setDisplayDetails] = useState(false);
 
   return (

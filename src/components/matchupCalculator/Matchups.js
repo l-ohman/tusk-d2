@@ -4,8 +4,8 @@ import { BsSortDown, BsSortUpAlt } from "react-icons/bs";
 import MatchupHeroBreakdown from "./MatchupHeroBreakdown";
 
 export default function Matchups({ team, update, side }) {
-  const allHeroes = useSelector((state) => state.heroes);
-  const selectedHero = useSelector((state) => state.selectedHero);
+  const allHeroes = useSelector((state) => state.matchupCalculator.allHeroes);
+  const selectedHero = useSelector((state) => state.matchupCalculator.selectedHero);
   const [heroesSortedByValue, setHeroesSortedByValue] = useState([]);
 
   const [sortOrder, setSortOrder] = useState(false);

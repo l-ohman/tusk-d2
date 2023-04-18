@@ -1,15 +1,15 @@
 import React, { useState, useEffect } from "react";
-import { useSelector, useDispatch } from "react-redux";
+// import { useSelector, useDispatch } from "react-redux";
 
 export default function BannedHeroes() {
-  const state = useSelector((state) => state);
+  // const state = useSelector((state) => state);
 
   return (
     <>
       <h3>Banned heroes</h3>
-      <div className="heroIconsContainer">
-        {state.teams.banned.map((heroId) => {
-          const hero = state.heroes[heroId];
+      {/* <div className="heroIconsContainer">
+        {state.matchupCalculator.teams.banned.map((heroId) => {
+          const hero = state.matchupCalculator.allHeroes[heroId];
           return (
             <img
               key={heroId}
@@ -22,7 +22,7 @@ export default function BannedHeroes() {
             />
           );
         })}
-      </div>
+      </div> */}
     </>
   );
 }

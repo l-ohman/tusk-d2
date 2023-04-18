@@ -1,26 +1,23 @@
 import React from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { addHeroToTeam, fetchHeroData, banHeroId, setSelectedHero, makeHeroIdUnselectable } from "../../store";
+import { setSelectedHero, addHeroToTeam, banHero } from "../../store/matchupCalculatorSlice";
 
 function HeroSelection() {
-  const selectedHero = useSelector((state) => state.selectedHero);
+  const selectedHero = useSelector((state) => state.matchupCalculator.selectedHero);
   const dispatch = useDispatch();
 
-  const handlePick = async (hero, team) => {
-    dispatch(addHeroToTeam(hero, team));
+  const handlePick = async (hero, isRadiant) => {
+    dispatch(addHeroToTeam(hero, isRadiant));
     await dispatch(fetchHeroData(hero.id, team));
     dispatch(setSelectedHero({}));
     dispatch(makeHeroIdUnselectable(hero.id));
   };
 
-  const banHero = (hero) => {
-    // yikes
-    dispatch(banHeroId(hero.id));
-    dispatch(makeHeroIdUnselectable(hero.id));
-    dispatch(setSelectedHero({}));
+  const banHeroId = (heroId) => {
+    dispatch(banHero(heroId));
   };
 
-  if (selectedHero.id) {
+  if (selectedHero) {
     return (
       <div className="heroSelection">
         <h3>Current hero selected:</h3>
@@ -34,13 +31,13 @@ function HeroSelection() {
           className="heroSelected"
         />
         <hr />
-        <button onClick={() => handlePick(selectedHero, "radiant")}>
+        <button onClick={() => handlePick(selectedHero, true)}>
           Add hero to radiant
         </button>
-        <button onClick={() => handlePick(selectedHero, "dire")}>
+        <button onClick={() => handlePick(selectedHero, false)}>
           Add hero to dire
         </button>
-        <button onClick={() => banHero(selectedHero)}>
+        <button onClick={() => banHeroId(selectedHero.id)}>
           Ban hero
         </button>
       </div>

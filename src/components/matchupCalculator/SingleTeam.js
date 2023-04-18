@@ -1,14 +1,13 @@
 import React from "react";
 import { useSelector } from "react-redux";
 
-function SingleTeam({ team }) {
-  const teams = useSelector((state) => state.teams);
-  const thisTeam = teams[team];
+function SingleTeam({ isRadiant }) {
+  const teams = useSelector((state) => state.matchupCalculator.teams);
 
   return (
     <div className="singleTeamContainer">
-      <h2>{team[0].toUpperCase() + team.slice(1)}</h2>
-      <div className="singleTeamContainerHeroes">
+      <h2>{isRadiant ? "Radiant " : "Dire "}Team placeholder</h2>
+      {/* <div className="singleTeamContainerHeroes">
         {thisTeam.map((hero) => {
           return (
             <img
@@ -18,7 +17,7 @@ function SingleTeam({ team }) {
             />
           );
         })}
-      </div>
+      </div> */}
     </div>
   );
 }

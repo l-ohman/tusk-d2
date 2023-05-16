@@ -16,11 +16,11 @@ export default function App() {
   return (
     <>
       <div id="page-container">
-        <Header />
+        {/* <Header /> */}
         <Routes>
           <Route index element={<MatchupCalculator />} />
-          <Route path="/matchup-calculator" element={<MatchupCalculator />} />
-          <Route path="/build" element={<BuildGenerator />}/>
+          {/* <Route path="/matchup-calculator" element={<MatchupCalculator />} />
+          <Route path="/build" element={<BuildGenerator />}/> */}
         </Routes>
       </div>
       {/* <Footer /> */}

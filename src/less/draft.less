@@ -5,17 +5,16 @@
   flex-direction: row;
   justify-content: center;
 
-  .leftContainer,
-  .rightContainer {
-    margin: 23px 5px;
-    padding: 12px 5px;
-    background: @grayDark;
-  }
   .leftContainer {
+    margin: 23px 5px;
+    background: @grayDark;
     width: 50%;
+    padding: 9px 5px 10px;
   }
   .rightContainer {
+    margin: 11px 3px 23px;
     width: 35%;
+    padding: 12px 7px;
   }
 }
 
@@ -23,9 +22,10 @@
   @searchBoxWidth: 190px;
   margin: 0 auto 0.3em;
   width: @searchBoxWidth;
-  color: black;
+  margin-bottom: 5px;
   #heroSearchTextbox {
     width: @searchBoxWidth;
+    color: black;
   }
 }
 
@@ -70,13 +70,42 @@
   }
 }
 
-.heroSelection {
-  margin-bottom: 55px;
-  height: 150px;
+#heroSelectionContainer {
+  @heroHeight: 145px;
+  @buttonHeight: 2.2em;
+  @selectionHeight: calc(@heroHeight + 2.2em);
 
-  .heroSelected {
-    width: 150px;
-    // float: right;
+  margin-bottom: 10px;
+  background: @grayDark;
+  height: @selectionHeight;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  
+
+  #selectedHero {
+    height: @heroHeight;
+    width: 100%;
+    white-space: nowrap;
+    text-align: center; // temporary until more detailed data is pulled for this display (position, lane, stat, etc)
+    padding: 0.5em;
+    img {
+      margin-top: 3px;
+      width: 150px;
+    }
+  }
+  #selectedHeroNone {
+    text-align: center;
+    * {
+      margin: auto auto;
+      width: fit-content;
+      line-height: @heroHeight; // centers text vertically in div (!)
+      font-style: italic;
+    }
+  }
+  #selectionButtons {
+    display: flex;
+    height: @buttonHeight;
   }
 }
 

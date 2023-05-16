@@ -25,14 +25,21 @@ export default function SelectedHero() {
         <div id="selectedHero">
           {/* <h3>Current hero selected:</h3> */}
           <h1>{selectedHero.name.replaceAll("_", " ")}</h1>
-          <img
-            src={`assets/heroIcons/${selectedHero.name.replaceAll(
-              " ",
-              "_"
-            )}_icon.webp`}
-            // draft img is 150px x 84.37px
-            alt={`${selectedHero.name} icon`}
-          />
+          <div>
+            <img
+              src={`assets/heroIcons/${selectedHero.name.replaceAll(
+                " ",
+                "_"
+              )}_icon.webp`}
+              // draft img is 150px x 84.37px
+              alt={`${selectedHero.name} icon`}
+            />
+            <div id="heroDetails">
+              <p>{`${(selectedHero.winrate * 100).toPrecision(4)}% winrate`}</p>
+              <p>Roles placeholder</p>
+              <p>Meta hero eval</p>
+            </div>
+          </div>
         </div>
       ) : (
         <div id="selectedHeroNone">

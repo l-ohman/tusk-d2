@@ -1,4 +1,4 @@
-@mainColor: rgb(54, 65, 68);
+@import "colors.less";
 
 #draft-container {
   display: flex;
@@ -7,7 +7,9 @@
 
   .leftContainer,
   .rightContainer {
-    margin: 35px 10px;
+    margin: 23px 5px;
+    padding: 12px 5px;
+    background: @grayDark;
   }
   .leftContainer {
     width: 50%;
@@ -18,19 +20,26 @@
 }
 
 #heroSearch {
+  @searchBoxWidth: 190px;
   margin: 0 auto 0.3em;
-  width: 200px;
+  width: @searchBoxWidth;
   color: black;
-  // max-width: 400px;
+  #heroSearchTextbox {
+    width: @searchBoxWidth;
+  }
 }
 
 .heroIconsContainer {
-  // background-color: @mainColor;
+  // background-color: @grayLight;
   display: flex;
   flex-flow: row wrap;
+  justify-content: center;
+  align-items: center;
 
   img:hover {
     transform: scale(1.35);
+    cursor: pointer;
+    border: 1px solid white;
   }
   .heroIconDraft {
     width: 60px;
@@ -40,6 +49,8 @@
     filter: grayscale(100%) brightness(0.75);
     &:hover {
       transform: scale(1);
+      cursor: default;
+      border: none;
     }
   }
   .banned {
@@ -107,7 +118,7 @@
     max-width: 500px;
     text-align: center;
     padding: 8px 10px;
-    background-color: @mainColor;
+    background-color: @grayLight;
   }
 }
 

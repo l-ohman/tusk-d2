@@ -1,5 +1,6 @@
 import React from "react";
 
+// temporarily not in use
 export default function SingleHeroData({ hero }) {
   return (
     <div id="selectedHeroItem">

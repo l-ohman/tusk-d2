@@ -2,7 +2,7 @@ const { expect } = require("chai");
 // const { Op } = require("sequelize");
 const { db, HeroMatchups } = require("../server/db");
 
-describe("Hero matchups", () => {
+describe("Hero matchups in database", () => {
   let heroIds = {};
 
   it("Table has proper number of heroes", async () => {

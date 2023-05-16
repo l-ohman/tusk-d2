@@ -2,7 +2,7 @@
 const fetchStratz = require("./fetchStratz");
 const { HeroMatchups } = require("../models/Hero");
 const { createWinrateQuery, createMatchupQuery } = require("./queries");
-const heroes = require("../../heroes.json")
+const heroes = require("../../heroes.json");
 
 // Utility functions //
 const getHeroById = async (heroId) => {
@@ -33,7 +33,7 @@ const fetchAllHeroesWinrates = async (weekCount = 1) => {
 
   for (let i = 0; i < data.length; i++) {
     const heroData = data[i];
-    
+
     const hero = await getHeroById(heroData.heroId);
     const heroWinrate = calculateWinrate(
       heroData.winCount,
@@ -81,7 +81,7 @@ function calculateCounter(observedWinrate, winrate1, winrate2) {
 function calculateSynergy(observedWinrate, winrate1, winrate2) {
   return Number(
     (
-      (observedWinrate - (-0.48 + (0.98 * winrate1) + (0.98 * winrate2))) *
+      (observedWinrate - (-0.48 + 0.98 * winrate1 + 0.98 * winrate2)) *
       100
     ).toPrecision(4)
   );
@@ -95,16 +95,15 @@ const updateSingleHeroMatchups = async (heroId) => {
   let withData;
   let againstData;
   const withMatchups = {};
-  const againstMatchups = {}; 
+  const againstMatchups = {};
 
   try {
     withData = data.with;
     againstData = data.vs;
   } catch (error) {
     console.error(error, "\n");
-    console.log(data)
+    console.log(data);
   }
-
 
   withData.forEach((itm) => {
     const [id, matchup] = restructureMatchupObject(itm, false);

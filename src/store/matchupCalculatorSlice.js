@@ -22,7 +22,6 @@ const matchupCalculatorSlice = createSlice({
       selectedHero: action.payload,
     }),
     addHeroToTeam: (state, action) => {
-      // state = { ...state };
       // For counters (vs), a larger NEGATIVE number means secondary hero is STRONGER against primary hero
       // For synergies (with), a larger POSITIVE number means secondary hero is STRONGER when paired with primary hero
       const primaryHero = action.payload.hero;
@@ -60,11 +59,12 @@ const matchupCalculatorSlice = createSlice({
         state.teams.dire[primaryHero.id] = primaryHero;
       }
       state.allHeroes[primaryHero.id].selectable = false;
-
       return state;
     },
     banHero: (state, action) => {
-      console.log("Placeholder for banning hero")
+      state.teams.banned[action.payload] = true;
+      state.allHeroes[action.payload].selectable = false;
+      state.selectedHero = null;
       return state;
     },
   },

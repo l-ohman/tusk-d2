@@ -132,26 +132,49 @@
 
 .teamsContainer {
   height: 350px;
-  margin-bottom: 20px;
+  margin: 14px 0 20px;
+  max-width: 330px;
 
   display: flex;
   flex-direction: row;
-  justify-content: space-between;
+  justify-content: space-around;
 }
 
 .singleTeamContainer {
-  // text-align: left;
+  background: @grayDark;
+  width: 7.8em;
+  height: fit-content;
+  padding-bottom: 0.45em;
+  text-align: center;
+  // border-radius: 5px;
+  h2 {
+    font-size: 1.37em;
+    padding: 0.3em 0 0.15em;
+  }
 
   &Heroes {
     min-width: 50%;
-    height: fit-content;
-
+    // height: fit-content;
     display: flex;
     flex-direction: column;
-
+    * {
+      margin: 4px auto;
+      border-radius: 7px;
+      border: 1px solid;
+    }
     .heroOnTeam {
       width: 90px;
-      margin: 4px 0;
+    }
+    .emptyHero {
+      width: 90px;
+      height: 51px;
+      background: #171617;
+    }
+    .radiant {
+      border-color: #3d6a3d;
+    }
+    .dire {
+      border-color: #84413e;
     }
   }
 }

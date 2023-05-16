@@ -6,12 +6,13 @@ function SingleTeam({ isRadiant }) {
   const team = useSelector(
     (state) => state.matchupCalculator.teams[isRadiant ? "radiant" : "dire"]
   );
+  const heroesOnTeam = Object.keys(team);
 
   return (
-    <div className="singleTeamContainer">
+    <div className={`singleTeamContainer${!isRadiant ? " direTeam" : ""}`}>
       <h2>{isRadiant ? "Radiant " : "Dire "}</h2>
       <div className="singleTeamContainerHeroes">
-        {Object.keys(team).map((heroId) => {
+        {heroesOnTeam.map((heroId) => {
           return (
             <img
               key={heroId}
@@ -19,10 +20,18 @@ function SingleTeam({ isRadiant }) {
                 " ",
                 "_"
               )}_icon.webp`}
-              className="heroOnTeam"
+              className={`heroOnTeam${isRadiant ? " radiant" : " dire"}`}
             />
           );
         })}
+        {Array(5 - heroesOnTeam.length)
+          .fill(0)
+          .map((x, i) => (
+            <div
+              className={`emptyHero${isRadiant ? " radiant" : " dire"}`}
+              key={i}
+            ></div>
+          ))}
       </div>
     </div>
   );

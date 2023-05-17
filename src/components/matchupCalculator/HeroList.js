@@ -4,14 +4,7 @@ import { setSelectedHero } from "../../store/matchupCalculatorSlice";
 
 export default function HeroList() {
   const allHeroes = useSelector((state) => state.matchupCalculator.allHeroes);
-  const selectedHero = useSelector(
-    (state) => state.matchupCalculator.selectedHero
-  );
   const dispatch = useDispatch();
-
-  useEffect(() => {
-    if (selectedHero === {}) console.log("Selected hero is an empty object");
-  }, [selectedHero]);
 
   const [heroSearch, setHeroSearch] = useState("");
   const handleSearch = (value) => {
@@ -28,6 +21,7 @@ export default function HeroList() {
           onChange={(e) => handleSearch(e.target.value)}
         />
       </div>
+      <hr />
       <div className="heroIconsContainer">
         {Object.values(allHeroes)
           .sort((a, b) => (a.name > b.name ? 1 : -1))

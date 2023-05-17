@@ -38,8 +38,7 @@ export default function SelectedHero() {
             />
             <div id="heroDetails">
               <p>{`${(selectedHero.winrate * 100).toPrecision(4)}% winrate`}</p>
-              <p>Roles placeholder</p>
-              <p>Meta hero eval</p>
+              {/* <p>winrate</p> */}
             </div>
           </div>
         </div>

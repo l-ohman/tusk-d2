@@ -9,6 +9,7 @@ export default function SelectedHero() {
   const selectedHero = useSelector(
     (state) => state.matchupCalculator.selectedHero
   );
+  const teams = useSelector(state => state.matchupCalculator.teams);
   const dispatch = useDispatch();
 
   const handlePick = async (heroId, isRadiant) => {
@@ -48,10 +49,10 @@ export default function SelectedHero() {
       )}
       {/* <hr /> */}
       <div id="selectionButtons">
-        <button onClick={() => handlePick(selectedHero.id, true)}>
+        <button onClick={() => handlePick(selectedHero.id, true)} disabled={teams.radiant.count >= 5}>
           Add hero to radiant
         </button>
-        <button onClick={() => handlePick(selectedHero.id, false)}>
+        <button onClick={() => handlePick(selectedHero.id, false)} disabled={teams.dire.count >= 5}>
           Add hero to dire
         </button>
         <button onClick={() => banHeroId(selectedHero.id)}>Ban hero</button>

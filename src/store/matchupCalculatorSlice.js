@@ -7,9 +7,18 @@ const matchupCalculatorSlice = createSlice({
     allHeroes: {},
     selectedHero: null,
     teams: {
-      radiant: {},
-      dire: {},
-      banned: {},
+      radiant: {
+        count: 0,
+        heroes: {}
+      },
+      dire: {
+        count: 0,
+        heroes: {}
+      },
+      banned: {
+        count: 0,
+        heroes: {}
+      },
     },
   },
   reducers: {
@@ -26,6 +35,11 @@ const matchupCalculatorSlice = createSlice({
       // For synergies (with), a larger POSITIVE number means secondary hero is STRONGER when paired with primary hero
       const primaryHero = action.payload.hero;
       const isRadiant = action.payload.isRadiant;
+      const teamName = isRadiant ? "radiant" : "dire";
+
+      if (state.teams[teamName].count === 5) {
+        return state;
+      }
 
       for (const secondaryHeroId in primaryHero.with) {
         const synergy = primaryHero.with[secondaryHeroId];
@@ -52,17 +66,14 @@ const matchupCalculatorSlice = createSlice({
         }
       }
 
-      // add the primary hero to "teams" array, unselect it, and make unselectable
-      if (isRadiant) {
-        state.teams.radiant[primaryHero.id] = primaryHero;
-      } else {
-        state.teams.dire[primaryHero.id] = primaryHero;
-      }
+      state.teams[teamName].heroes[primaryHero.id] = state.teams[teamName].count;
+      state.teams[teamName].count += 1;
       state.allHeroes[primaryHero.id].selectable = false;
       return state;
     },
     banHero: (state, action) => {
-      state.teams.banned[action.payload] = true;
+      state.teams.banned.heroes[action.payload] = true;
+      state.teams.banned.count += 1;
       state.allHeroes[action.payload].selectable = false;
       state.selectedHero = null;
       return state;

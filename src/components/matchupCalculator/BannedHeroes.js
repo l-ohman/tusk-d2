@@ -3,7 +3,7 @@ import { useSelector } from "react-redux";
 
 export default function BannedHeroes() {
   const state = useSelector((state) => state);
-  const bannedHeroes = Object.keys(state.matchupCalculator.teams.banned);
+  const bannedHeroes = Object.keys(state.matchupCalculator.teams.banned.heroes);
 
   return (
     <div id="bannedHeroesContainer">

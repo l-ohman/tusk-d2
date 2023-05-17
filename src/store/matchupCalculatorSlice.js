@@ -72,7 +72,7 @@ const matchupCalculatorSlice = createSlice({
       return state;
     },
     banHero: (state, action) => {
-      state.teams.banned.heroes[action.payload] = true;
+      state.teams.banned.heroes[action.payload] = state.teams.banned.count;
       state.teams.banned.count += 1;
       state.allHeroes[action.payload].selectable = false;
       state.selectedHero = null;

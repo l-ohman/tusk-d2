@@ -2,8 +2,9 @@ import React from "react";
 import { useSelector } from "react-redux";
 
 export default function BannedHeroes() {
-  const state = useSelector((state) => state);
-  const bannedHeroes = Object.keys(state.matchupCalculator.teams.banned.heroes);
+  const state = useSelector(state => state);
+  const team = state.matchupCalculator.teams.banned;
+  const bannedHeroes = Object.keys(team.heroes).sort((idA,idB) => team.heroes[idA] - team.heroes[idB]);
 
   return (
     <div id="bannedHeroesContainer">

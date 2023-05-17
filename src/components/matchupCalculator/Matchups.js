@@ -5,14 +5,16 @@ import MatchupHeroBreakdown from "./MatchupHeroBreakdown";
 
 export default function Matchups({ team, update, side }) {
   const allHeroes = useSelector((state) => state.matchupCalculator.allHeroes);
-  const selectedHero = useSelector((state) => state.matchupCalculator.selectedHero);
+  const selectedHero = useSelector(
+    (state) => state.matchupCalculator.selectedHero
+  );
   const [heroesSortedByValue, setHeroesSortedByValue] = useState([]);
 
   const [sortOrder, setSortOrder] = useState(false);
   const toggleSort = () => {
     setHeroesSortedByValue(heroesSortedByValue.reverse());
     setSortOrder(!sortOrder);
-  }
+  };
 
   const sortMatchupValuesForDisplay = () => {
     const sortedHeroes = [];
@@ -59,14 +61,21 @@ export default function Matchups({ team, update, side }) {
       </div>
 
       <div>
-        {heroesSortedByValue.map((hero) => (
-          <MatchupHeroBreakdown
-            key={hero.id}
-            hero={hero}
-            team={team}
-            side={side}
-          />
-        ))}
+        {heroesSortedByValue.length ? (
+          heroesSortedByValue.map((hero) => (
+            <MatchupHeroBreakdown
+              key={hero.id}
+              hero={hero}
+              team={team}
+              side={side}
+            />
+          ))
+        ) : (
+          <>
+            <hr id="infoTextDivider" />
+            <p className="infoText">No heroes have been picked</p>
+          </>
+        )}
       </div>
     </div>
   );

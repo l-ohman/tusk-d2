@@ -13,6 +13,7 @@ export default function MatchupHeroBreakdown({ hero, team, side }) {
       <div className="heroInMatchupList">
         <img
           src={`assets/heroIcons/${hero.name.replaceAll(" ", "_")}_icon.webp`}
+          alt={hero.name}
         />
         <p>{hero.name}</p>
         <p>
@@ -51,6 +52,7 @@ export default function MatchupHeroBreakdown({ hero, team, side }) {
                           " ",
                           "_"
                         )}_icon.webp`}
+                        alt={radiantHero.name}
                       />
                       <p>
                         {`${radiantHero.name}'s ${
@@ -72,6 +74,7 @@ export default function MatchupHeroBreakdown({ hero, team, side }) {
                         " ",
                         "_"
                       )}_icon.webp`}
+                      alt={direHero.name}
                     />
                     <p>
                       {`${direHero.name}'s ${

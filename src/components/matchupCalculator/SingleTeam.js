@@ -7,7 +7,9 @@ function SingleTeam({ isRadiant }) {
     (state) => state.matchupCalculator.teams[isRadiant ? "radiant" : "dire"]
   );
   // ensure they remain sorted by pick order instead of heroId
-  const heroesOnTeam = Object.keys(team.heroes).sort((idA,idB) => team.heroes[idA] - team.heroes[idB]);
+  const heroesOnTeam = Object.keys(team.heroes).sort(
+    (idA, idB) => team.heroes[idA] - team.heroes[idB]
+  );
 
   return (
     <div className={`singleTeamContainer${!isRadiant ? " direTeam" : ""}`}>
@@ -21,6 +23,7 @@ function SingleTeam({ isRadiant }) {
                 " ",
                 "_"
               )}_icon.webp`}
+              alt={allHeroes[heroId].name}
               className={`heroOnTeam${isRadiant ? " radiant" : " dire"}`}
             />
           );

@@ -39,7 +39,7 @@ export default function HeroList() {
                   " ",
                   "_"
                 )}_icon.webp`}
-                alt={`${hero.name} icon`}
+                alt={`${hero.name}`}
                 onClick={
                   hero.selectable
                     ? () => dispatch(setSelectedHero(hero))

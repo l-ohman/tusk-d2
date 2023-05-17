@@ -4,20 +4,21 @@ import {
   fetchAndCalculateHeroData,
   banHero,
 } from "../../store/matchupCalculatorSlice";
+import { HeroSelectionButtons } from "../";
 
 export default function SelectedHero() {
   const selectedHero = useSelector(
     (state) => state.matchupCalculator.selectedHero
   );
-  const teams = useSelector(state => state.matchupCalculator.teams);
+  const teams = useSelector((state) => state.matchupCalculator.teams);
   const dispatch = useDispatch();
 
   const handlePick = async (heroId, isRadiant) => {
-    await dispatch(fetchAndCalculateHeroData(heroId, isRadiant));
+    if (heroId) await dispatch(fetchAndCalculateHeroData(heroId, isRadiant));
   };
 
   const banHeroId = (heroId) => {
-    dispatch(banHero(heroId));
+    if (heroId) dispatch(banHero(heroId));
   };
 
   return (
@@ -33,7 +34,7 @@ export default function SelectedHero() {
                 "_"
               )}_icon.webp`}
               // draft img is 150px x 84.37px
-              alt={`${selectedHero.name} icon`}
+              alt={`${selectedHero.name}`}
             />
             <div id="heroDetails">
               <p>{`${(selectedHero.winrate * 100).toPrecision(4)}% winrate`}</p>
@@ -49,13 +50,34 @@ export default function SelectedHero() {
       )}
       {/* <hr /> */}
       <div id="selectionButtons">
-        <button onClick={() => handlePick(selectedHero.id, true)} disabled={teams.radiant.count >= 5}>
-          Add hero to radiant
-        </button>
-        <button onClick={() => handlePick(selectedHero.id, false)} disabled={teams.dire.count >= 5}>
-          Add hero to dire
-        </button>
-        <button onClick={() => banHeroId(selectedHero.id)}>Ban hero</button>
+        <div
+          onClick={() => handlePick(selectedHero?.id, true)}
+          className={`selectionButton${
+            teams.radiant.count >= 5 || selectedHero === null
+              ? " disabledButton"
+              : ""
+          }`}
+        >
+          Add to Radiant
+        </div>
+        <div
+          onClick={() => banHeroId(selectedHero?.id)}
+          className={`selectionButton banButton${
+            selectedHero === null ? " disabledButton" : ""
+          }`}
+        >
+          Ban
+        </div>
+        <div
+          onClick={() => handlePick(selectedHero?.id, false)}
+          className={`selectionButton${
+            teams.dire.count >= 5 || selectedHero === null
+              ? " disabledButton"
+              : ""
+          }`}
+        >
+          Add to Dire
+        </div>
       </div>
     </div>
   );

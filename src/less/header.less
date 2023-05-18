@@ -6,6 +6,7 @@
   padding: 0.8em 0 0.7em;
   width: 100%;
   > div {
+    // max-width: 920px;
     width: fit-content;
     margin: 0 auto;
     img {
@@ -32,16 +33,27 @@
   position: relative;
   bottom: 0;
   padding: 0.5em 0;
-
   text-align: center;
-  color: white;
   font-style: italic;
+  font-size: 0.87em;
+  * {
+    color: rgb(233, 228, 236);
+  }
   a {
+    display: flex;
+    width: fit-content;
+    align-items: center;
+    margin: 0.25em auto 0.2em;
+    font-size: 1.35em;
     font-style: normal;
     text-decoration: none;
+    transition: all 0.1s linear;
+    p {
+      padding-right: 0.25em;
+    }
     &:hover {
-      color: rgb(187, 183, 193);
-      text-decoration: underline;
+      color: white;
+      // text-decoration: underline;
     }
   }
 }

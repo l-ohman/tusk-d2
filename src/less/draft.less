@@ -59,16 +59,18 @@
   }
   .unselectable {
     filter: grayscale(100%) brightness(0.75);
+    transition: all 0s;
     &:hover {
-      transform: scale(1);
+      transform: none;
       cursor: default;
       border: none;
     }
   }
   .banned {
     filter: grayscale(100%);
+    transition: all 0s;
     &:hover {
-      transform: scale(1);
+      transform: none;
       border: none;
       cursor: default;
     }

@@ -174,7 +174,7 @@
       font-size: 0.9em;
       text-align: center;
 
-      transition: linear 0.13s background-color;
+      transition: background-color 0.13s linear;
       background-color: #1f1f23;
       border: 1px solid #5a5a60;
       &:hover {
@@ -183,9 +183,11 @@
       }
     }
     .disabledButton {
+      color: #c3c3c3;
       &:hover {
         cursor: default;
         background-color: #1f1f23;
+        transition: background-color 0s;
       }
     }
   }

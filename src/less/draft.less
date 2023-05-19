@@ -139,6 +139,8 @@
       img {
         margin-left: 0.5em;
         height: @heroImgHeight;
+        border: 1px solid rgba(212, 212, 212, 0.3);
+        box-shadow: 1px 1px 7px rgba(0, 0, 0, 0.35);
       }
       #heroDetails {
         height: @heroImgHeight;
@@ -154,7 +156,7 @@
   #selectedHeroNone {
     text-align: center;
     * {
-      margin: auto auto;
+      margin: auto;
       width: fit-content;
       line-height: @heroHeight;
       font-style: italic;
@@ -226,9 +228,11 @@
       margin: 4px auto;
       border-radius: 7px;
       border: 1px solid;
+      box-shadow: 1px 1px 9px rgba(0, 0, 0, 0.25);
     }
     .heroOnTeam {
       width: 90px;
+      height: 51px;
     }
     .emptyHero {
       width: 90px;
@@ -286,6 +290,7 @@
   align-items: center;
   justify-content: space-between;
   margin-bottom: 0.2em;
+  user-select: none;
   h3 {
     margin: 0;
   }

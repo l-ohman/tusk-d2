@@ -91,7 +91,8 @@
   margin: 0 auto;
   padding: 0.5em 0.55em 0.4em;
   background-color: @grayDark;
-  max-width: 282px;
+  // max-width: 282px;
+  width: 100%;
   h3 {
     margin-bottom: 0.15em;
   }
@@ -198,18 +199,17 @@
 }
 
 .teamsContainer {
-  height: 350px;
-  margin: 14px auto 1px;
+  margin: 14px auto;
   max-width: 330px;
 
   display: flex;
   flex-direction: row;
-  justify-content: space-around;
+  justify-content: space-between;
 }
 
 .singleTeamContainer {
   background: @grayDark;
-  width: 7.8em;
+  width: 145px;
   height: fit-content;
   padding-bottom: 0.45em;
   text-align: center;
@@ -230,13 +230,15 @@
       border: 1px solid;
       box-shadow: 1px 1px 9px rgba(0, 0, 0, 0.25);
     }
+    @heroWidth: calc(90px*1.15);
+    @heroHeight: calc(51px*1.15);
     .heroOnTeam {
-      width: 90px;
-      height: 51px;
+      width: @heroWidth;
+      height: @heroHeight
     }
     .emptyHero {
-      width: 90px;
-      height: 51px;
+      width: @heroWidth;
+      height: @heroHeight;
       background: #171617;
     }
     .radiant {

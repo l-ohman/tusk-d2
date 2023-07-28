@@ -1,0 +1,400 @@
+/*!*************************************************************************************************************!*\
+  !*** css ./node_modules/css-loader/dist/cjs.js!./node_modules/less-loader/dist/cjs.js!./src/less/main.less ***!
+  \*************************************************************************************************************/
+#draft-container {
+  max-width: 1100px;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+}
+#draft-container .leftContainer {
+  margin: 23px 5px;
+  background: #28282e;
+  width: 50%;
+  padding: 9px 5px 10px;
+}
+#draft-container .leftContainer hr {
+  border-color: #a6a6a6;
+  margin: 0.4em 0.52em 0.3em;
+}
+#draft-container .rightContainer {
+  margin: 11px 3px 23px;
+  width: 35%;
+  padding: 12px 7px;
+}
+#heroSearch {
+  margin: 0 0.62em 0.3em;
+  width: 190px;
+  margin-bottom: 5px;
+}
+#heroSearch #heroSearchTextbox {
+  width: 190px;
+  color: black;
+}
+.heroIconsContainer {
+  display: flex;
+  flex-flow: row wrap;
+  justify-content: center;
+  align-items: center;
+}
+.heroIconsContainer.bans {
+  justify-content: flex-start;
+}
+.heroIconsContainer img {
+  border: 1px solid rgba(0, 0, 0, 0);
+  transition: transform 0.2s linear 0.1s, border-color 0.25s linear;
+}
+.heroIconsContainer img:hover {
+  transform: scale(1.35);
+  cursor: pointer;
+  border: 1px solid white;
+}
+.heroIconsContainer .heroIconDraft {
+  height: 34px;
+  width: 60px;
+  margin: 3px;
+}
+.heroIconsContainer .unselectable {
+  filter: grayscale(100%) brightness(0.75);
+  transition: all 0s;
+}
+.heroIconsContainer .unselectable:hover {
+  transform: none;
+  cursor: default;
+  border: none;
+}
+.heroIconsContainer .banned {
+  filter: grayscale(100%);
+  transition: all 0s;
+}
+.heroIconsContainer .banned:hover {
+  transform: none;
+  border: none;
+  cursor: default;
+}
+.heroIconsContainer .matchSearch {
+  transform: scale(1.28);
+  border: 2px solid #ffffff;
+  z-index: 10;
+  filter: contrast(115%);
+}
+.heroIconsContainer .doesNotMatchSearch {
+  filter: grayscale(70%);
+}
+#bannedHeroesContainer {
+  text-align: center;
+  margin: 0 auto;
+  padding: 0.5em 0.55em 0.4em;
+  background-color: #28282e;
+  width: 100%;
+}
+#bannedHeroesContainer h3 {
+  margin-bottom: 0.15em;
+}
+.infoText {
+  margin: 0 auto;
+  font-size: 0.85em;
+  font-style: italic;
+}
+#infoTextDivider {
+  margin: 0.3em auto 0.5em;
+  border-color: #a6a6a6;
+}
+#heroSelectionContainer {
+  margin: 0 auto 10px;
+  background: #28282e;
+  height: calc(140px + 2.2em);
+  max-width: 330px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+#heroSelectionContainer #selectedHero {
+  height: 140px;
+  width: 100%;
+  white-space: nowrap;
+  padding: 0.5em 0.5em 0;
+}
+#heroSelectionContainer #selectedHero h1 {
+  margin-bottom: 3px;
+  text-align: center;
+}
+#heroSelectionContainer #selectedHero > div {
+  width: 100%;
+  margin: 0 auto;
+  display: flex;
+  justify-content: space-between;
+}
+#heroSelectionContainer #selectedHero > div img {
+  margin-left: 0.5em;
+  height: 83px;
+  border: 1px solid rgba(212, 212, 212, 0.3);
+  box-shadow: 1px 1px 7px rgba(0, 0, 0, 0.35);
+}
+#heroSelectionContainer #selectedHero > div #heroDetails {
+  height: 83px;
+  width: fit-content;
+  font-style: italic;
+}
+#heroSelectionContainer #selectedHero > div #heroDetails p {
+  margin-right: 2em;
+  line-height: 83px;
+}
+#heroSelectionContainer #selectedHeroNone {
+  text-align: center;
+}
+#heroSelectionContainer #selectedHeroNone * {
+  margin: auto;
+  width: fit-content;
+  line-height: 140px;
+  font-style: italic;
+}
+#heroSelectionContainer #selectionButtons {
+  display: flex;
+  height: 2.2em;
+  width: 100%;
+  user-select: none;
+}
+#heroSelectionContainer #selectionButtons .selectionButton {
+  min-height: 2.2em;
+  width: 40%;
+  line-height: calc(2.2em * 1.15);
+  font-size: 0.9em;
+  text-align: center;
+  transition: background-color 0.13s linear;
+  background-color: #1f1f23;
+  border: 1px solid #5a5a60;
+}
+#heroSelectionContainer #selectionButtons .selectionButton.banButton {
+  width: 20%;
+}
+#heroSelectionContainer #selectionButtons .selectionButton:hover {
+  cursor: pointer;
+  background-color: #27272d;
+}
+#heroSelectionContainer #selectionButtons .disabledButton {
+  color: #c3c3c3;
+}
+#heroSelectionContainer #selectionButtons .disabledButton:hover {
+  cursor: default;
+  background-color: #1f1f23;
+  transition: background-color 0s;
+}
+.teamsContainer {
+  margin: 14px auto;
+  max-width: 330px;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+.singleTeamContainer {
+  background: #28282e;
+  width: 145px;
+  height: fit-content;
+  padding-bottom: 0.45em;
+  text-align: center;
+}
+.singleTeamContainer h2 {
+  font-size: 1.37em;
+  padding: 0.3em 0 0.15em;
+}
+.singleTeamContainerHeroes {
+  min-width: 50%;
+  display: flex;
+  flex-direction: column;
+}
+.singleTeamContainerHeroes * {
+  margin: 4px auto;
+  border-radius: 7px;
+  border: 1px solid;
+  box-shadow: 1px 1px 9px rgba(0, 0, 0, 0.25);
+}
+.singleTeamContainerHeroes .heroOnTeam {
+  width: calc(90px*1.15);
+  height: calc(51px*1.15);
+}
+.singleTeamContainerHeroes .emptyHero {
+  width: calc(90px*1.15);
+  height: calc(51px*1.15);
+  background: #171617;
+}
+.singleTeamContainerHeroes .radiant {
+  border-color: #3d6a3d;
+}
+.singleTeamContainerHeroes .dire {
+  border-color: #84413e;
+}
+.matchupContainer {
+  max-width: 1000px;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+}
+.matchupContainer .individualMatchupCont {
+  margin: 0.5em;
+  height: fit-content;
+  width: 450px;
+  max-width: 450px;
+  text-align: center;
+  padding: 8px 10px;
+  background-color: #364144;
+}
+.heroInMatchupList {
+  margin: 6px 0;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.heroInMatchupList img {
+  height: 50px;
+}
+.heroInMatchupList svg {
+  margin-left: 5px;
+  cursor: pointer;
+}
+.teamRecommendationsHeader {
+  margin-bottom: 0.4em;
+}
+.matchupListHeader {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 0.2em;
+  user-select: none;
+}
+.matchupListHeader h3 {
+  margin: 0;
+}
+.matchupListHeader svg {
+  cursor: pointer;
+}
+.matchupDetails {
+  margin: 3px auto 6px;
+}
+.matchupDetails .matchupDetailsItem {
+  margin: 5px auto;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.matchupDetails .matchupDetailsItem img {
+  height: 25px;
+  margin-right: 8px;
+}
+.matchupDetails .matchupDetailsItem p {
+  font-size: 0.78em;
+}
+#header {
+  background-color: #28282e;
+  padding: 0.8em 0 0.7em;
+  width: 100%;
+}
+#header > div {
+  width: fit-content;
+  margin: 0 auto;
+}
+#header > div img {
+  display: inline-block;
+  width: 2.6em;
+  height: 2.6em;
+  margin-bottom: 0.1em;
+}
+#header > div > div {
+  display: inline-block;
+  padding-left: 0.6em;
+}
+#header > div > div h1 {
+  font-size: 2em;
+}
+#header > div > div h4 {
+  margin-left: 0.25em;
+  font-size: 0.98em;
+}
+#footer {
+  background-color: #28282e;
+  position: relative;
+  bottom: 0;
+  padding: 0.5em 0;
+  text-align: center;
+  font-style: italic;
+  font-size: 0.87em;
+}
+#footer * {
+  color: #e9e4ec;
+}
+#footer a {
+  display: flex;
+  width: fit-content;
+  align-items: center;
+  margin: 0.25em auto 0.2em;
+  font-size: 1.35em;
+  font-style: normal;
+  text-decoration: none;
+  transition: all 0.1s linear;
+}
+#footer a p {
+  padding-right: 0.25em;
+}
+#footer a:hover {
+  color: white;
+}
+#singleMatchupViewer {
+  margin: 0 auto;
+  max-width: 750px;
+  min-width: 400px;
+}
+.helptext {
+  text-align: center;
+  margin: 0.5em auto 0.2em;
+  font-style: italic;
+}
+#selectedHeroItem {
+  width: fit-content;
+  max-width: 85%;
+  background-color: #364144;
+  display: flex;
+  margin: 15px auto;
+  padding: 11px 1em;
+  align-items: center;
+}
+#selectedHeroItem img {
+  margin-left: 20px;
+  width: 120px;
+  height: 67.5px;
+}
+@font-face {
+  font-family: 'Chivo';
+  font-style: italic;
+  font-weight: 200;
+  src: url(https://fonts.gstatic.com/s/chivo/v18/va9Z4kzIxd1KFrBtW-13ZHhT-jDqdFyG1GrW.ttf) format('truetype');
+}
+@font-face {
+  font-family: 'Chivo';
+  font-style: normal;
+  font-weight: 200;
+  src: url(https://fonts.gstatic.com/s/chivo/v18/va9b4kzIxd1KFppkaRKvDRPJVDf_PB_ulw.ttf) format('truetype');
+}
+* {
+  box-sizing: border-box;
+  margin: 0;
+  font-family: 'Chivo', sans-serif;
+  color: whitesmoke;
+}
+* button {
+  color: black;
+}
+body {
+  background-color: black;
+}
+#page-container {
+  margin-bottom: 2em;
+}
+#contentHeader {
+  text-align: center;
+  margin: 0.3em auto 0.15em;
+}
+
+
+/*# sourceMappingURL=main.css.map*/

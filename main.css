@@ -395,6 +395,12 @@ body {
   text-align: center;
   margin: 0.3em auto 0.15em;
 }
+#disclaimer {
+  font-size: 0.9rem;
+  font-style: italic;
+  text-align: center;
+  margin: 9px auto -14px;
+}
 
 
 /*# sourceMappingURL=main.css.map*/

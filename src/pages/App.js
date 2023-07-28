@@ -17,9 +17,10 @@ export default function App() {
     <>
       <div id="page-container">
         <Header />
-        <Routes>
+        <MatchupCalculator />
+        {/* <Routes>
           <Route index element={<MatchupCalculator />} />
-        </Routes>
+        </Routes> */}
       </div>
       <Footer />
     </>

@@ -1,5 +1,4 @@
 import { createSlice } from "@reduxjs/toolkit";
-import axios from "axios";
 import heroListDb from "../../server/dumpHeroes.json";
 import matchupsDb from "../../server/dumpMatchups.json";
 

@@ -2,7 +2,7 @@ const fs = require("fs");
 const path = require("path");
 
 const input = path.resolve(__dirname, "../tmp/output.sql");
-const output = path.resolve(__dirname, "data.json");
+const output = path.resolve(__dirname, "dumpMatchups.json");
 
 fs.readFile(input, "utf8", (err, data) => {
   if (err) {
@@ -12,11 +12,10 @@ fs.readFile(input, "utf8", (err, data) => {
 
   const lines = data.split("\n").filter((line) => line.trim() !== "");
   const heroList = lines.filter((line) => {
-    const check = line.slice(0, 3).trimEnd();
-    if (!check) return false;
-    const isHeroId = !isNaN(check);
+    const isHeroId = !isNaN(line[0]) && line[0] !== " ";
     return isHeroId;
   });
+  console.log(heroList.length)
 
   const heroes = {};
   for (let i = 0; i < heroList.length; i++) {

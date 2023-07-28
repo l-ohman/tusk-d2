@@ -1,5 +1,7 @@
 import { createSlice } from "@reduxjs/toolkit";
 import axios from "axios";
+import heroListDb from "../../server/dumpHeroes.json";
+import matchupsDb from "../../server/dumpMatchups.json";
 
 const matchupCalculatorSlice = createSlice({
   name: "matchupCalculatorSlice",
@@ -9,15 +11,15 @@ const matchupCalculatorSlice = createSlice({
     teams: {
       radiant: {
         count: 0,
-        heroes: {}
+        heroes: {},
       },
       dire: {
         count: 0,
-        heroes: {}
+        heroes: {},
       },
       banned: {
         count: 0,
-        heroes: {}
+        heroes: {},
       },
     },
   },
@@ -31,7 +33,7 @@ const matchupCalculatorSlice = createSlice({
       selectedHero: action.payload,
     }),
     addHeroToTeam: (state, action) => {
-      // For counters (vs), a larger NEGATIVE number means secondary hero is STRONGER against primary hero
+      // For counters (against), a larger NEGATIVE number means secondary hero is STRONGER against primary hero
       // For synergies (with), a larger POSITIVE number means secondary hero is STRONGER when paired with primary hero
       const primaryHero = action.payload.hero;
       const isRadiant = action.payload.isRadiant;
@@ -43,7 +45,7 @@ const matchupCalculatorSlice = createSlice({
 
       for (const secondaryHeroId in primaryHero.with) {
         const synergy = primaryHero.with[secondaryHeroId];
-        const counter = primaryHero.vs[secondaryHeroId];
+        const counter = primaryHero.against[secondaryHeroId];
 
         // update radiant/dire ratings
         if (isRadiant) {
@@ -61,12 +63,16 @@ const matchupCalculatorSlice = createSlice({
           detailedMatchups.radiant[primaryHero.id] = { ...synergy, with: true };
           detailedMatchups.dire[primaryHero.id] = { ...counter, with: false };
         } else {
-          detailedMatchups.radiant[primaryHero.id] = { ...counter, with: false };
+          detailedMatchups.radiant[primaryHero.id] = {
+            ...counter,
+            with: false,
+          };
           detailedMatchups.dire[primaryHero.id] = { ...synergy, with: true };
         }
       }
 
-      state.teams[teamName].heroes[primaryHero.id] = state.teams[teamName].count;
+      state.teams[teamName].heroes[primaryHero.id] =
+        state.teams[teamName].count;
       state.teams[teamName].count += 1;
       state.allHeroes[primaryHero.id].selectable = false;
       return state;
@@ -86,7 +92,8 @@ export const { setAllHeroes, setSelectedHero, addHeroToTeam, banHero } =
   matchupCalculatorSlice.actions;
 
 export const initializeAllHeroes = () => async (dispatch) => {
-  const { data: heroList } = await axios.get("/api/heroes");
+  const heroList = heroListDb;
+
   const allHeroes = {};
   for (let i = 0; i < heroList.length; i++) {
     allHeroes[heroList[i].id] = {
@@ -106,7 +113,8 @@ export const initializeAllHeroes = () => async (dispatch) => {
 
 export const fetchAndCalculateHeroData =
   (heroId, isRadiant) => async (dispatch) => {
-    const { data: hero } = await axios.get(`/api/heroes/${heroId}`);
+    const hero = matchupsDb[heroId];
+    hero.id = heroId;
     const payload = { hero, isRadiant };
     dispatch(addHeroToTeam(payload));
     dispatch(setSelectedHero(null));

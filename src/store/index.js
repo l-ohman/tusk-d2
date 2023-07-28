@@ -12,5 +12,5 @@ export default configureStore({
     buildGenerator: buildGeneratorReducer,
   },
   middleware: (getDefaultMiddleware) =>
-    getDefaultMiddleware().concat(loggerMiddleware),
+    getDefaultMiddleware()/*.concat(loggerMiddleware)*/,
 });

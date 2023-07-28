@@ -10,6 +10,7 @@ import {
 export default function MatchupCalculator() {
   return (
     <>
+    <p id="disclaimer">Data from the week of July 21 - July 28, 2023</p>
       <div id="draft-container">
         <HeroList />
         <div className="rightContainer">

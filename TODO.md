@@ -9,4 +9,4 @@
   - [ ] Ability to undo picks and bans
 - [x] Add "expand matchups" button to show detailed counters/synergies per suggestion <!-- This is current priority — also need to fix calculations, and possibly also rename "counter/synergy" in Redux to "radiant/dire" (or team A/B) -->
 - [ ] In "details" of matchups, highlight which team each hero belongs to <!-- Just a list of heroes is a bit difficult to read -->
-- [ ] Static version that pulls from json instead of actual DB <!-- Might not be necessary, but we'll see -->
+- [x] Static version that pulls from json instead of actual DB <!-- Might not be necessary, but we'll see -->

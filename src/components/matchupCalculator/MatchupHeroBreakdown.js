@@ -54,11 +54,13 @@ export default function MatchupHeroBreakdown({ hero, team, side }) {
                         )}_icon.webp`}
                         alt={radiantHero.name}
                       />
-                      <p>
+                      <p className="detailsHelpText">
                         {`${radiantHero.name}'s ${
                           matchup.with ? "Synergy With" : "Value Against"
                         } ${hero.name}: `}
-                        <b>{matchup.difference}</b>
+                      </p>
+                      <p>
+                        <b>{matchup.difference.toFixed(3)}</b>
                       </p>
                     </div>
                   );
@@ -76,11 +78,13 @@ export default function MatchupHeroBreakdown({ hero, team, side }) {
                       )}_icon.webp`}
                       alt={direHero.name}
                     />
-                    <p>
+                    <p className="detailsHelpText">
                       {`${direHero.name}'s ${
                         matchup.with ? "Synergy With" : "Value Against"
                       } ${hero.name}: `}
-                      <b>{matchup.difference}</b>
+                    </p>
+                    <p>
+                      <b>{matchup.difference.toFixed(3)}</b>
                     </p>
                   </div>
                 );

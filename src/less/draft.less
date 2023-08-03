@@ -91,8 +91,7 @@
   margin: 0 auto;
   padding: 0.5em 0.55em 0.4em;
   background-color: @grayDark;
-  // max-width: 282px;
-  width: 100%;
+  width: min(100%, 330px);
   h3 {
     margin-bottom: 0.15em;
   }
@@ -230,11 +229,11 @@
       border: 1px solid;
       box-shadow: 1px 1px 9px rgba(0, 0, 0, 0.25);
     }
-    @heroWidth: calc(90px*1.15);
-    @heroHeight: calc(51px*1.15);
+    @heroWidth: calc(90px * 1.15);
+    @heroHeight: calc(51px * 1.15);
     .heroOnTeam {
       width: @heroWidth;
-      height: @heroHeight
+      height: @heroHeight;
     }
     .emptyHero {
       width: @heroWidth;
@@ -303,19 +302,22 @@
 
 .matchupDetails {
   margin: 3px auto 6px;
+  width: fit-content;
 
   .matchupDetailsItem {
     margin: 5px auto;
     display: flex;
-    justify-content: center;
+    justify-content: space-between;
     align-items: center;
 
     img {
       height: 25px;
-      margin-right: 8px;
     }
     p {
-      font-size: 0.78em;
+      font-size: 0.8em;
+    }
+    .detailsHelpText {
+      padding: 0 15px;
     }
   }
 }

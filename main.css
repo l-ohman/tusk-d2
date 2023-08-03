@@ -87,7 +87,7 @@
   margin: 0 auto;
   padding: 0.5em 0.55em 0.4em;
   background-color: #28282e;
-  width: 100%;
+  width: min(100%, 330px);
 }
 #bannedHeroesContainer h3 {
   margin-bottom: 0.15em;
@@ -211,12 +211,12 @@
   box-shadow: 1px 1px 9px rgba(0, 0, 0, 0.25);
 }
 .singleTeamContainerHeroes .heroOnTeam {
-  width: calc(90px*1.15);
-  height: calc(51px*1.15);
+  width: calc(90px * 1.15);
+  height: calc(51px * 1.15);
 }
 .singleTeamContainerHeroes .emptyHero {
-  width: calc(90px*1.15);
-  height: calc(51px*1.15);
+  width: calc(90px * 1.15);
+  height: calc(51px * 1.15);
   background: #171617;
 }
 .singleTeamContainerHeroes .radiant {
@@ -272,19 +272,22 @@
 }
 .matchupDetails {
   margin: 3px auto 6px;
+  width: fit-content;
 }
 .matchupDetails .matchupDetailsItem {
   margin: 5px auto;
   display: flex;
-  justify-content: center;
+  justify-content: space-between;
   align-items: center;
 }
 .matchupDetails .matchupDetailsItem img {
   height: 25px;
-  margin-right: 8px;
 }
 .matchupDetails .matchupDetailsItem p {
-  font-size: 0.78em;
+  font-size: 0.8em;
+}
+.matchupDetails .matchupDetailsItem .detailsHelpText {
+  padding: 0 15px;
 }
 #header {
   background-color: #28282e;

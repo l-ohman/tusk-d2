@@ -87,6 +87,29 @@ function calculateSynergy(observedWinrate, winrate1, winrate2) {
   );
 }
 
+// Merge old/new data for a cell (such as id/with or id/against)
+const mergePastPresentData = (existingData, newData) => {
+  for (let heroId in existingData) {
+    if (!Object.keys(newData).includes(heroId)) continue;
+
+    const oldMatchup = existingData[heroId];
+    const newMatchup = newData[heroId];
+    const totalMatches = oldMatchup.matchCount + newMatchup.matchCount;
+
+    const newWeight = newMatchup.matchCount / totalMatches;
+    const oldWeight = 1 - newWeight;
+
+    const adjustedWinrate =
+      oldMatchup.winrate * oldWeight + newMatchup.winrate * newWeight;
+    const adjustedDifference =
+      oldMatchup.difference * oldWeight + newMatchup.difference * newWeight;
+
+    newMatchup.matchCount = totalMatches;
+    newMatchup.winrate = adjustedWinrate;
+    newMatchup.difference = adjustedDifference;
+  }
+};
+
 // Gets matchups for a single hero
 const updateSingleHeroMatchups = async (heroId) => {
   let { data } = await fetchStratz(createMatchupQuery(heroId));
@@ -97,6 +120,7 @@ const updateSingleHeroMatchups = async (heroId) => {
   const withMatchups = {};
   const againstMatchups = {};
 
+  // ???
   try {
     withData = data.with;
     againstData = data.vs;
@@ -115,6 +139,9 @@ const updateSingleHeroMatchups = async (heroId) => {
   });
 
   const heroInDb = await getHeroById(data.heroId);
+  mergePastPresentData(heroInDb.with, withMatchups);
+  mergePastPresentData(heroInDb.vs, againstMatchups);
+
   await heroInDb.update({
     with: withMatchups,
     vs: againstMatchups,
@@ -134,8 +161,13 @@ const fetchAllHeroesMatchups = async () => {
 };
 
 const updateAllData = async () => {
-  await buildHeroTable();
-  await fetchAllHeroesWinrates();
+  // todo1: separate functionality for initializing/adding data (should detect automatically)(+ test this)
+  // await buildHeroTable();
+
+  // todo2: fix method of calculating/storing overall winrate (currently does not support proper updates)
+  // await fetchAllHeroesWinrates();
+
+  // todo3: see todo1. write tests for this functionality (and implement better db backup system?).
   await fetchAllHeroesMatchups();
 };
 

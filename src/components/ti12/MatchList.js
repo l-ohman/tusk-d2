@@ -4,7 +4,7 @@ import SingleMatch from "./SingleMatch";
 
 export default function MatchList() {
   const allMatches = useSelector((state) => state.ti12.allMatches);
-  console.log(allMatches);
+  // console.log(allMatches);
 
   return (
     <div id="match-list-wrapper">

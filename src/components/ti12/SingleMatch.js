@@ -1,5 +1,5 @@
 import React from "react";
-import { heroNameById, heroIconById } from "../../lib";
+import { heroNameById, heroIconById, secondsToClockTime } from "../../lib";
 
 export default function SingleMatch({ match }) {
   return (
@@ -11,7 +11,7 @@ export default function SingleMatch({ match }) {
           <Roster isRadiant={true} pickBans={match.pickBans} isPick={false} />
         </div>
       </div>
-      <MatchInfo />
+      <MatchInfo match={match} />
       <div className="team-draft dire-draft">
         <Team team={match.direTeam} />
         <div className="pickBan-container">
@@ -60,6 +60,16 @@ function Roster({ pickBans, isRadiant, isPick = true }) {
   );
 }
 
-function MatchInfo() {
-  return <div>Match info</div>;
+function MatchInfo({ match }) {
+  const matchWinner = match.didRadiantWin
+    ? match.radiantTeam.name
+    : match.direTeam.name;
+  const date = new Date(match.startDateTime * 1000);
+  return (
+    <div className="match-info-basic">
+      <h3>{secondsToClockTime(match.durationSeconds)}</h3>
+      <p>{matchWinner} Victory</p>
+      <p>{`${date.getMonth()}/${date.getDate()}/${date.getFullYear()}`}</p>
+    </div>
+  );
 }

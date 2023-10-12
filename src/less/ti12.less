@@ -8,10 +8,10 @@
 }
 
 #match-list-wrapper {
+  margin: 20px 0;
   width: 100%;
   h2 {
     text-align: center;
-    margin-bottom: 0.5rem;
   }
   #match-list-container {
     width: min(100%, 1500px);
@@ -27,6 +27,9 @@
   }
   display: flex;
   justify-content: space-between;
+  &:last-child {
+    border-bottom: none;
+  }
 }
 
 .team-draft {
@@ -67,5 +70,21 @@
       width: 38px;
       filter: saturate(0);
     }
+  }
+}
+
+@borderThing: 1px solid rgb(120, 120, 120);
+.match-info-basic {
+  margin: 10px 0;
+  border-left: @borderThing;
+  border-right: @borderThing;
+  width: 100%;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  > * {
+    margin: 2px 0;
   }
 }

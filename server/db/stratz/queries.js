@@ -39,45 +39,40 @@ const createMatchupQuery = (heroId) => {
 
 //*** TI 12 STATS QUERIES ***//
 
-//todo: determine stratz match return count
-const getAllTiMatchesQuery = () => {
+const getAllTiMatchesQuery = (take = 10, skip = 0) => {
   return `query getTiMatchList {
     league(id: 15728) {
-      matches(request: {take: 1000, skip: 0}) {
+      matches(request: {take: ${take}, skip: ${skip}}) {
         id
+        startDateTime
+        durationSeconds
+        didRadiantWin
+        bottomLaneOutcome
+        midLaneOutcome
+        topLaneOutcome
+        radiantTeam {
+          id
+          logo
+          name
+        }
+        direTeam {
+          id
+          logo
+          name
+        }
+        pickBans {
+          heroId
+          isPick
+          isRadiant
+        }
       }
     }
   }
   `;
 };
 
-const createTiMatchQuery = (matchId) => {
-  return `query getTiMatches {
-    match(id: ${matchId}) {
-      startDateTime
-      durationSeconds
-      didRadiantWin
-      bottomLaneOutcome
-      midLaneOutcome
-      topLaneOutcome
-      radiantTeam {
-        id
-        logo
-        name
-      }
-      direTeam {
-        id
-        logo
-        name
-      }
-      pickBans {
-        heroId
-        isPick
-        isRadiant
-      }
-    }
-  }
-  `;
+module.exports = {
+  createWinrateQuery,
+  createMatchupQuery,
+  getAllTiMatchesQuery,
 };
-
-module.exports = { createWinrateQuery, createMatchupQuery };

@@ -9,6 +9,7 @@
     "server": "nodemon --watch server",
     "test": "mocha tests -w",
     "fetch-hero-matchups": "node server/db/stratz/getHeroMatchups.js",
+    "fetch-ti12-data": "node server/db/stratz/getTi12Stats.js",
     "db-to-json": "npm run dump-db && npm run conv-sql-to-json",
     "dump-db": "pg_dump -h localhost -p 5432 -d tusk_d2 -t hero_matchups > './tmp/output.sql'",
     "conv-sql-to-json": "node server/dump.js"

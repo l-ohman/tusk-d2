@@ -5,7 +5,6 @@ const { Match, TIHero } = require("../db");
 router.get("/heroes", async (req, res, next) => {
   try {
     const heroes = await TIHero.findAll();
-    console.log(heroes);
     res.send(heroes);
   } catch (error) {
     next(error);

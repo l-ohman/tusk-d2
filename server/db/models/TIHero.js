@@ -25,8 +25,8 @@ const TIHero = db.define(
     winrate: {
       type: Sequelize.VIRTUAL,
       get() {
-        if (matchCount > 0) return (this.wins / this.matchCount).toFixed(2);
-        return "0.00";
+        if (!this.matchCount) return "0.00";
+        return (this.winCount / this.matchCount).toFixed(2);
       },
       set() {
         throw new Error("Cannot manually set 'winrate'");

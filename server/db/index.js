@@ -2,12 +2,14 @@
 
 const db = require("./database");
 const { HeroMatchups } = require("./models/Hero");
-// const Match = require("./models/Match");
-// const Team = require("./models/Team");
+const { Match } = require("./models/Match");
+const { TIHero } = require("./models/TIHero");
 
-// Should define relations here once Team is built and hero winrates are added
+// Associations here
 
 module.exports = {
   db,
   HeroMatchups,
+  Match,
+  TIHero,
 };

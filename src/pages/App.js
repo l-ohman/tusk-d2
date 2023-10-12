@@ -4,13 +4,18 @@ import { Routes, Route } from "react-router-dom";
 
 import { Header, Footer } from "../components";
 import { initializeAllHeroes } from "../store/matchupCalculatorSlice";
+import { initializeTI12Data } from "../store/ti12Slice";
 import { MatchupCalculator, BuildGenerator, TI12Stats } from "./";
 
 export default function App() {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    dispatch(initializeAllHeroes());
+    const init = async () => {
+      await dispatch(initializeAllHeroes());
+      await dispatch(initializeTI12Data());
+    };
+    init();
   }, []);
 
   return (

@@ -3,6 +3,8 @@ import allHeroes from "../../../server/heroes.json"; // xd
 import { heroIconById, heroNameById } from "../../lib";
 import { useSelector } from "react-redux";
 
+// too many components/fns in one file -- to cleanup later
+
 export default function HeroList() {
   const tiHeroes = useSelector((state) => state.ti12.allHeroes);
   let heroes = [];
@@ -26,13 +28,34 @@ export default function HeroList() {
     return sortHeroes(heroes, sortCategory, sortHighLow);
   }, [tiHeroes, sortCategory, sortHighLow]);
 
+  const noPicks = sortedHeroes.filter((hero) => hero.matchCount === 0);
+  const noBans = sortedHeroes.filter((hero) => hero.banCount === 0);
+  const unpickBanned = [];
+  for (let hero of noPicks) {
+    const val = noBans.find((h) => {
+      console.log(hero.id, h.id);
+      return h.id === hero.id;
+    });
+    console.log(val);
+    if (val) unpickBanned.push(hero);
+  }
+
   return (
     <>
+      <div id="unpickbanned-heroes">
+        <SubHeroList header="Unpicked heroes" heroes={noPicks} />
+        <SubHeroList header="Unbanned heroes" heroes={noBans} />
+      </div>
+      <SubHeroList header="Unpicked and unbanned" heroes={unpickBanned} />
+      <hr className="list-divider" />
       <div id="sort-help-text">{sortHelpText(sortCategory, sortHighLow)}</div>
       <div id="full-hero-list">
         <table>
           <thead>
             <tr>
+              <td>
+                <p className="table-header-p">#</p>
+              </td>
               <td>
                 <p className="table-header-p">Hero</p>
               </td>
@@ -72,9 +95,9 @@ export default function HeroList() {
             </tr>
           </thead>
           <tbody>
-            {sortedHeroes?.map((hero, i) => (
+            {sortedHeroes?.map((hero, idx) => (
               <tr key={hero.id}>
-                <SingleHero hero={hero} />
+                <SingleHero hero={hero} idx={idx} />
               </tr>
             ))}
           </tbody>
@@ -84,11 +107,12 @@ export default function HeroList() {
   );
 }
 
-function SingleHero({ hero }) {
+function SingleHero({ hero, idx }) {
   const name = allHeroes[hero.id].name;
 
   return (
     <>
+      <td>{idx + 1}</td>
       <td>
         <img src={heroIconById(hero.id)} alt={heroNameById(hero.id)} />
       </td>
@@ -121,4 +145,20 @@ function sortHeroes(heroes, category, highLow) {
 function sortHelpText(category, highLow) {
   const direction = highLow ? "high to low" : "low to high";
   return `Sorting by ${category} (${direction})`;
+}
+
+function SubHeroList({ header, heroes }) {
+  return (
+    <div className="herolist-container">
+      <h2>
+        {header}
+        {` (${heroes.length})`}
+      </h2>
+      <div className="hero-list-img-container">
+        {heroes.map((hero) => (
+          <img src={heroIconById(hero.id)} alt={heroNameById(hero.id)} />
+        ))}
+      </div>
+    </div>
+  );
 }

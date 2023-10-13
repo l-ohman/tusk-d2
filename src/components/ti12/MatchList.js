@@ -23,7 +23,7 @@ export default function MatchList() {
     <div id="match-list-wrapper">
       <MatchFilters matches={matches} setMatches={setMatches} />
       <div id="match-list-container">
-        {sortedMatches
+        {matches
           .filter((match) => match.id != brokenARMatchId)
           ?.map((match) => (
             <SingleMatch match={match} key={match.id} />

@@ -3,6 +3,7 @@ const db = require("../database");
 const { Match } = require("../models/Match");
 const { TIHero } = require("../models/TIHero");
 const { getAllTiMatchesQuery } = require("./queries");
+const heroes = require("../../heroes.json");
 
 // Clears Match/TIHero tables if they exists, creates a new table otherwise
 const syncTables = async () => {
@@ -25,7 +26,6 @@ const fetchAllTiMatches = async (skip = 0) => {
     const newMatches = await fetchAllTiMatches(skip + 10);
     allMatches = [...allMatches, ...newMatches];
   }
-  console.log("Fetched all matches from Stratz", `(recursion count:${count})`);
   return allMatches;
 };
 
@@ -38,6 +38,12 @@ const addMatchesToDb = async (matches) => {
     "Added all matches to Match table",
     `(${matches.length} matches)`
   );
+};
+
+const initAllHeroes = async () => {
+  for (let heroId in heroes) {
+    await TIHero.create({ id: heroId });
+  }
 };
 
 const updateHeroesInDb = async (matches) => {
@@ -76,6 +82,7 @@ const updateHeroesInDb = async (matches) => {
 const updateAllData = async () => {
   await syncTables();
 
+  await initAllHeroes();
   const matches = await fetchAllTiMatches();
   await addMatchesToDb(matches);
   await updateHeroesInDb(matches);

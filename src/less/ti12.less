@@ -154,7 +154,40 @@
 }
 
 #sort-help-text {
-  margin: 1.15rem auto;
+  margin: 0 auto 1.15rem;
   width: fit-content;
   font-size: 1.2rem;
+}
+
+.list-divider {
+  background: whitesmoke;
+  width: min(750px, 100%);
+  height: 1px;
+  margin: 25px auto 17px;
+}
+
+.herolist-container {
+  text-align: center;
+  max-width: 450px;
+  background: @grayLight;
+  height: fit-content;
+  margin: 0 auto;
+  padding: 7px;
+}
+
+#unpickbanned-heroes {
+  display: flex;
+  justify-content: center;
+  margin: 18px auto;
+}
+
+.hero-list-img-container {
+  display: flex;
+  flex-flow: row wrap;
+  justify-content: center;
+  img {
+    width: 53px;
+    display: block;
+    margin: 3px;
+  }
 }

@@ -1,7 +1,8 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useMemo } from "react";
 import { useSelector } from "react-redux";
 import MatchFilters from "./MatchFilters";
 import SingleMatch from "./SingleMatch";
+const brokenARMatchId = 7378986342; // xd
 
 export default function MatchList() {
   const allMatches = useSelector((state) => state.ti12.allMatches);
@@ -22,9 +23,11 @@ export default function MatchList() {
     <div id="match-list-wrapper">
       <MatchFilters matches={matches} setMatches={setMatches} />
       <div id="match-list-container">
-        {matches?.map((match) => (
-          <SingleMatch match={match} key={match.id} />
-        ))}
+        {sortedMatches
+          .filter((match) => match.id != brokenARMatchId)
+          ?.map((match) => (
+            <SingleMatch match={match} key={match.id} />
+          ))}
       </div>
     </div>
   );

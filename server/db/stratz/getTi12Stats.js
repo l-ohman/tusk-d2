@@ -13,10 +13,20 @@ const syncTables = async () => {
 
 // currently only adding the latest 10 matches
 // todo: get ALL matches from the event
-const fetchAllTiMatches = async () => {
-  let { data } = await fetchStratz(getAllTiMatchesQuery());
-  console.log("Fetched all matches from Stratz");
-  return data.league.matches;
+let count = 0;
+const fetchAllTiMatches = async (skip = 0) => {
+  // recursion protection lol
+  count += 1;
+  if (count > 25) return [];
+
+  let { data } = await fetchStratz(getAllTiMatchesQuery(10, skip));
+  let allMatches = data.league.matches;
+  if (allMatches.length === 10) {
+    const newMatches = await fetchAllTiMatches(skip + 10);
+    allMatches = [...allMatches, ...newMatches];
+  }
+  console.log("Fetched all matches from Stratz", `(recursion count:${count})`);
+  return allMatches;
 };
 
 const addMatchesToDb = async (matches) => {

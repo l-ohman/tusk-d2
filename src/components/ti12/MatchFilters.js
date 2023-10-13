@@ -24,6 +24,7 @@ export default function MatchFilters({ matches, setMatches }) {
     <div id="match-filters-container">
       <HeroFilters team="A" heroes={teamAHeroes} setHeroes={setTeamAHeroes} />
       {/* <HeroFilters team="B" heroes={teamBHeroes} setHeroes={setTeamBHeroes} /> */}
+      <MatchDetails matchCount={matches.length} />
     </div>
   );
 }
@@ -84,7 +85,13 @@ function HeroFilters({ team, heroes, setHeroes }) {
   );
 }
 
-// function MatchDetails
+function MatchDetails({ matchCount }) {
+  return (
+    <div>
+      <p>{matchCount} matches found</p>
+    </div>
+  );
+}
 
 // util
 const isHeroInMatch = (match, heroId) => {

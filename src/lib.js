@@ -6,7 +6,7 @@ export function heroNameById(heroId) {
 
 export function heroIconById(heroId) {
   const name = heroNameById(heroId).replaceAll(" ", "_");
-  return `assets/heroIcons/${name}_icon.webp`;
+  return `/assets/heroIcons/${name}_icon.webp`;
 }
 
 export function secondsToClockTime(seconds) {

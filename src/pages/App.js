@@ -5,7 +5,7 @@ import { Routes, Route } from "react-router-dom";
 import { Header, Footer } from "../components";
 import { initializeAllHeroes } from "../store/matchupCalculatorSlice";
 import { initializeTI12Data } from "../store/ti12Slice";
-import { MatchupCalculator, BuildGenerator, TI12Stats } from "./";
+import { MatchupCalculator, TI12Matches, TI12Heroes } from "./";
 
 export default function App() {
   const dispatch = useDispatch();
@@ -24,7 +24,8 @@ export default function App() {
         <Header />
         <Routes>
           <Route index element={<MatchupCalculator />} />
-          <Route path="/ti12" element={<TI12Stats />} />
+          <Route path="/ti12/matches" element={<TI12Matches />} />
+          <Route path="/ti12/heroes" element={<TI12Heroes />} />
         </Routes>
       </div>
       <Footer />

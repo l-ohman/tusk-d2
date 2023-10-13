@@ -5,7 +5,7 @@ export default function SingleMatch({ match }) {
   return (
     <div className="single-match">
       <div className="team-draft radiant-draft">
-        <Team team={match.radiantTeam} />
+        <Team team={match.radiantTeam} wonGame={match.didRadiantWin} />
         <div className="pickBan-container">
           <Roster isRadiant={true} pickBans={match.pickBans} />
           <Roster isRadiant={true} pickBans={match.pickBans} isPick={false} />
@@ -13,7 +13,7 @@ export default function SingleMatch({ match }) {
       </div>
       <MatchInfo match={match} />
       <div className="team-draft dire-draft">
-        <Team team={match.direTeam} />
+        <Team team={match.direTeam} wonGame={!match.didRadiantWin} />
         <div className="pickBan-container">
           <Roster isRadiant={false} pickBans={match.pickBans} />
           <Roster isRadiant={false} pickBans={match.pickBans} isPick={false} />
@@ -23,11 +23,17 @@ export default function SingleMatch({ match }) {
   );
 }
 
-function Team({ team }) {
+function Team({ team, wonGame }) {
   return (
     <div className="single-match-team">
       {/* <p>{team.name}</p> */}
-      <img src={team.logo} alt={team.name} />
+      <img
+        src={team.logo}
+        alt={team.name}
+        className={
+          "team-icon " + (wonGame ? "icon-match-winner" : "icon-match-loser")
+        }
+      />
     </div>
   );
 }
@@ -68,7 +74,15 @@ function MatchInfo({ match }) {
   return (
     <div className="match-info-basic">
       <h3>{secondsToClockTime(match.durationSeconds)}</h3>
-      <p>{matchWinner} Victory</p>
+      <p>
+        <a
+          href={`https://stratz.com/matches/${match.id}`}
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          View Match on Stratz
+        </a>
+      </p>
       <p>{`${date.getMonth()}/${date.getDate()}/${date.getFullYear()}`}</p>
     </div>
   );

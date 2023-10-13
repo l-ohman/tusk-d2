@@ -8,7 +8,7 @@
 }
 
 #match-list-wrapper {
-  margin: 20px 0;
+  margin: 20px auto;
   width: 100%;
   h2 {
     text-align: center;
@@ -19,16 +19,26 @@
 
 #match-filters-container {
   background: @grayLight2;
-  padding: 15px 20px;
+  padding: 18px 25px;
   margin-bottom: 20px;
   // border: 1px solid pink;
   display: flex;
-  // justify-content: space-around;
+  justify-content: space-between;
   // > div:first-child {
   //   padding-right: 45px;
   //   border-right: 1px solid white;
   //   margin-right: 45px;
   // }
+}
+
+.team-icon {
+  border-radius: 6px;
+}
+.icon-match-winner {
+  border: 2px solid greenyellow;
+}
+.icon-match-loser {
+  border: 2px solid red;
 }
 
 .hero-selection-container {

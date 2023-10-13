@@ -15,7 +15,7 @@ const fetchStratz = async (userQuery) => {
   response = await response.json();
 
   // Self rate-limiting because fields were consistently being returned as 'null'
-  await sleep(100);
+  await sleep(500);
 
   return response;
 };

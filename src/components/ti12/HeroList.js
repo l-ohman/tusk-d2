@@ -28,17 +28,21 @@ export default function HeroList() {
     return sortHeroes(heroes, sortCategory, sortHighLow);
   }, [tiHeroes, sortCategory, sortHighLow]);
 
-  const noPicks = sortedHeroes.filter((hero) => hero.matchCount === 0);
-  const noBans = sortedHeroes.filter((hero) => hero.banCount === 0);
-  const unpickBanned = [];
-  for (let hero of noPicks) {
-    const val = noBans.find((h) => {
-      console.log(hero.id, h.id);
-      return h.id === hero.id;
-    });
-    console.log(val);
-    if (val) unpickBanned.push(hero);
-  }
+  const noPicks = useMemo(() => {
+    return sortedHeroes.filter((hero) => hero.matchCount === 0);
+  }, [tiHeroes]);
+  const noBans = useMemo(() => {
+    return sortedHeroes.filter((hero) => hero.banCount === 0);
+  }, [tiHeroes]);
+
+  const unpickBanned = useMemo(() => {
+    const unpickedUnbanned = [];
+    for (let hero of noPicks) {
+      const val = noBans.find((h) => h.id === hero.id);
+      if (val) unpickedUnbanned.push(hero);
+    }
+    return unpickedUnbanned;
+  }, [tiHeroes]);
 
   return (
     <>

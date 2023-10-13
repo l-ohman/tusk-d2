@@ -7,6 +7,8 @@
   }
 }
 
+//** MATCH LIST
+
 #match-list-wrapper {
   margin: 20px auto;
   width: 100%;
@@ -120,4 +122,37 @@
   > * {
     margin: 2px 0;
   }
+}
+
+//** HERO LIST
+
+#full-hero-list {
+  background: @grayLight;
+  width: fit-content;
+  max-width: 1400px;
+  margin: 0 auto;
+  img {
+    width: 100px;
+    margin-right: 16px;
+  }
+  tr {
+    background: @grayLight;
+    &:nth-child(odd) {
+      background: @grayLight2;
+    }
+    margin: 0;
+  }
+  thead > tr {
+    * {
+      font-size: 1.2rem;
+      font-weight: bold;
+    }
+  }
+}
+.table-header-p {
+  margin: 0.3rem 1.2rem 0.3rem 0.3rem;
+}
+//:)
+#hello {
+  height: 30px;
 }

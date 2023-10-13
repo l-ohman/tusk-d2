@@ -95,7 +95,7 @@ function SingleHero({ hero }) {
       <td>{name}</td>
       <td>{hero.matchCount}</td>
       <td>{hero.winCount}</td>
-      <td>{hero.winrate}</td>
+      <td>{(+hero.winrate).toFixed(2)}%</td>
       <td>{hero.banCount}</td>
     </>
   );

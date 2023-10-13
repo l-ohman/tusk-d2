@@ -1,17 +1,28 @@
-import React from "react";
-import { useSelector, useDispatch } from "react-redux";
+import React, { useState, useEffect } from "react";
+import { useSelector } from "react-redux";
+import MatchFilters from "./MatchFilters";
 import SingleMatch from "./SingleMatch";
 
 export default function MatchList() {
   const allMatches = useSelector((state) => state.ti12.allMatches);
-  // console.log(allMatches);
+  const [matches, setMatches] = useState([]);
+
+  useEffect(() => {
+    if (allMatches.length > 0) setMatches(allMatches);
+  }, [allMatches]);
+
+  // automatically resets matches if the filters don't find anything
+  useEffect(() => {
+    if (matches.length === 0) {
+      setMatches(allMatches);
+    }
+  }, [matches]);
 
   return (
     <div id="match-list-wrapper">
-      {/* <h2>Matches</h2> */}
-      {/* todo: searching/filtering/etc */}
+      <MatchFilters matches={matches} setMatches={setMatches} />
       <div id="match-list-container">
-        {allMatches?.map((match, idx) => (
+        {matches?.map((match) => (
           <SingleMatch match={match} key={match.id} />
         ))}
       </div>

@@ -13,10 +13,32 @@
   h2 {
     text-align: center;
   }
-  #match-list-container {
-    width: min(100%, 1500px);
-    padding: 0 30px;
+  width: min(100%, 1500px);
+  padding: 0 30px;
+}
+
+#match-filters-container {
+  background: @grayLight2;
+  padding: 15px 20px;
+  margin-bottom: 20px;
+  // border: 1px solid pink;
+  display: flex;
+  // justify-content: space-around;
+  // > div:first-child {
+  //   padding-right: 45px;
+  //   border-right: 1px solid white;
+  //   margin-right: 45px;
+  // }
+}
+
+.hero-selection-container {
+  img {
+    width: 68px;
+    margin: 10px 3px 0;
   }
+}
+.hero-selection {
+  color: black;
 }
 
 .single-match {
@@ -68,6 +90,7 @@
     }
     .hero-ban {
       width: 38px;
+      padding: 0 2px;
       filter: saturate(0);
     }
   }
